@@ -15,7 +15,7 @@ module Mongoboard
 		set :public_dir, File.dirname(__FILE__) + '/static'
 
 		get '/' do
-			redirect '/releases.json'
+			redirect '/index.html'
 		end
 
 		get '/releases.json' do 
@@ -320,5 +320,7 @@ module Mongoboard
 			step.save!
 		end
 
+		# start the server if ruby file executed directly
+		run! if app_file == $0
 	end
 end
