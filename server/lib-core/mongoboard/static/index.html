@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>Mongoboard</title>
+
+		<!-- load the dashboard css -->
+		<link href="css/styles.css" rel="stylesheet">
+
+
+		<!-- load gitter css -->
+		<link href="css/gitter/css/jquery.gritter.css" rel="stylesheet"/>
+		<link href="http://ajax.aspnetcdn.com/ajax/jquery.dataTables/1.9.4/css/jquery.dataTables.css" rel="stylesheet">
+		<!-- load jquery library -->
+		<script src="libs/jquery/jquery-1.8.2.js" type="text/javascript"> </script>
+		<!-- load jquery ui library -->
+		<script src="libs/jquery/jquery-ui.js" type="text/javascript"> </script>
+		<script src="libs/jquery.form.js" type="text/javascript"> </script>
+
+		
+		<!-- load touch punch library to enable dragging on touch based devices -->
+		<script src="libs/touchpunch/jquery.ui.touch-punch.js" type="text/javascript"> </script>
+		<!-- load gitter notification library -->
+		<script src="libs/gitter/jquery.gritter.js" type="text/javascript"> </script>
+
+		<!-- load datatables library -->
+		<script src="libs/datatables/jquery.dataTables.js"> </script>
+
+		<!-- load flotr2 charting library -->
+		<!--[if IE]>
+		<script language="javascript" type="text/javascript" src="libs/flotr2/flotr2.ie.min.js"></script>
+		<![endif]-->
+		<script src="libs/flotr2/flotr2.js" type="text/javascript"> </script>
+		
+		<script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.2.4/angular.min.js"></script>
+ 
+		<!-- load dashboard library -->
+		<script src="libs/jquery-sDashboard.js" type="text/javascript"> </script>
+		<script src="index.js" type="text/javascript"> </script>
+
+
+<body>
+
+<div id="header">
+<h1>Mongoboard</h1>
+</div>
+
+<div id="add-deployment">
+<form method="post" name="create_rc" id="create_rc" action="release">
+		<label>
+			<span>Software</span>
+			<input type="text" name="software" list="dlist_software">
+		</label>
+		<datalist id="dlist_software">
+		</datalist>
+
+		<label>
+			<span>Revision</span>
+			<input type="text" name="revision">
+		</label>
+		<label>
+			<span>System</span>
+			<input type="text" name="system" list="systems">
+		</label>
+		<datalist id="dlist_systems">
+		</datalist>
+
+		<button type="submit" id="create_release">Create new release candidate</button>
+	</form>
+</div>
+
+<div id="releases">
+	<div>
+	</div>
+</div>
