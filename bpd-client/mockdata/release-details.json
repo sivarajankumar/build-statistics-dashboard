@@ -1,0 +1,310 @@
+{ 
+	"name": "Shop", 
+	"system": "Production -DE, AT, NL-", 
+	"created": "2013-12-24 15:02T+2", 
+	"id": "werfiowehr92830rh238923298", 
+	"version": "123456",
+	"quality": {
+			"value": 5,
+			"numOfSupportRequests": 10,
+			"numOfOutServerRestarts": 1
+	},
+	"metrics": [
+    {
+        "label": "lines in changelog",
+		"types": [ "subversion-analysis", "important" ],
+        "id": "changelog",
+        "value": 25,
+	"comparisonValues" : [
+		{ 
+		"label": "average of last 5 builds", 
+		"type": "avg-last-5-builds",
+		"value": 18
+		}
+	]
+    },
+    {
+        "label": "code volume",
+		"types": [ "subversion-analysis" ],
+        "id": "code-volume",
+        "value": 3000,
+	"comparisonValues" : [
+		{ 
+		"label": "average of last 5 builds", 
+		"type": "avg-last-5-builds",
+		"value": 1523
+		}
+	]
+    },
+    {
+        "label": "number of active developers",
+		"types": [ "subversion-analysis" ],
+        "id": "num-developers",
+        "value": 6,
+	"comparisonValues" : [
+		{ 
+		"label": "average of last 5 builds", 
+		"type": "avg-last-5-builds",
+		"value": 8
+		}
+	]
+    },
+    {
+        "label": "external interfaces involved",
+        "id": "num-external-interfaces",
+		"types": [ "static-code-analysis" ],
+        "value": 3,
+	"comparisonValues" : [
+		{ 
+		"label": "average of last 5 builds", 
+		"type": "avg-last-6-builds",
+		"value": 3.4
+		}
+	]
+    },
+    {
+        "label": "code complexity",
+        "id": "code-complexity",
+		"types": [ "static-code-analysis", "important" ],
+        "value": 200,
+	"comparisonValues" : [
+		{ 
+		"label": "average of last 5 builds", 
+		"type": "avg-last-5-builds",
+		"value": 120
+		}
+	]
+    },
+    {
+        "label": "new created support requests",
+        "id": "new-support-requests",
+		"types": [ "post-production-review" ],
+        "value": 10,
+	"comparisonValues" : [
+		{ 
+		"label": "average of last 5 builds", 
+		"type": "avg-last-5-builds",
+		"value": 12.4567
+		}
+	]
+    },
+    {
+        "label": "server restarts",
+        "id": "server-restarts",
+		"types": [ "post-production-review", "important" ],
+        "value": 1,
+	"comparisonValues" : [
+		{ 
+		"label": "average of last 5 builds", 
+		"type": "avg-last-5-builds",
+		"value": 3.23
+		}
+	]
+    },
+    {
+        "label": "average requests per day",
+        "id": "average requests per day",
+		"types": [ "post-production-review" ],
+        "value": 216548.1254,
+	"comparisonValues" : [
+		{ 
+		"label": "average of last 5 builds", 
+		"type": "avg-last-5-builds",
+		"value": 202146.1518
+		}
+	]
+    },
+	{
+        "label": "load test: search and tracking",
+		"types": [ "load-tests", "important" ],
+        "id": "load-test-01",
+        "value": 30,
+	"comparisonValues" : [
+		{ 
+		"label": "average of last 5 builds", 
+		"type": "avg-last-5-builds",
+		"value": 50
+		}
+	]
+    },
+	{
+        "label": "load test: login and session handling",
+		"types": [ "load-tests" ],
+        "id": "load-test-02",
+        "value": 5.2,
+	"comparisonValues" : [
+		{ 
+		"label": "average of last 5 builds", 
+		"type": "avg-last-5-builds",
+		"value": 2.2
+		}
+	]
+    }
+],
+	"steps": [
+    {
+        "id": "1_sdfopksdfpoksdfpoksdpof",
+        "label": "compile source code",
+        "status": "executed",
+        "attachments": [
+            {
+                "label": "logfiles",
+                "link": "http://www.heise.de"
+            },
+            {
+                "label": "artifacts",
+                "link": "http://www.heise.de"
+            }
+        ],
+        "comments": [
+            {
+                "author": "Karl Heinz",
+                "text": "Lorem ipsum dolor sit amet, consetetur sadipscing elitr, \nsed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet. Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod t"
+            },
+            {
+                "author": "Hans Ludger",
+                "text": "ok is checked"
+            }
+        ]		
+    },
+	
+	    {
+        "id": "2_sdfopksdfpoksdfpoksdpof",
+        "label": "execute unit tests",
+        "status": "passed",
+        "attachments": [
+            {
+                "label": "test results",
+                "link": "http://www.heise.de"
+            }
+        ],
+        "comments": [
+            {
+                "author": "Karl Heinz",
+                "text": "Lorem ipsum dolor sit amet, consetetur sadipscing elitr, \nsed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet. Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod t"
+            },
+            {
+                "author": "Hans Ludger",
+                "text": "ok is checked"
+            }
+        ]
+    },
+	
+	    {
+        "id": "3_sdfopksdfpoksdfpoksdpof",
+        "label": "execute integration tests",
+        "status": "failed",
+        "attachments": [
+            {
+                "label": "logfiles",
+                "link": "http://www.heise.de"
+            },
+            {
+                "label": "artifacts",
+                "link": "http://www.heise.de"
+            }
+        ],
+        "comments": [
+            {
+                "author": "Karl Heinz",
+                "text": "Lorem ipsum dolor sit amet, consetetur sadipscing elitr, \nsed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet. Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod t"
+            },
+            {
+                "author": "Hans Ludger",
+                "text": "ok is checked"
+            }
+        ]
+    },
+	
+	    {
+        "id": "4_sdfopksdfpoksdfpoksdpof",
+        "label": "deploy on testsystem",
+        "status": "passed",
+        "attachments": [
+            {
+                "label": "logfiles",
+                "link": "http://www.heise.de"
+            },
+            {
+                "label": "artifacts",
+                "link": "http://www.heise.de"
+            }
+        ],
+        "comments": [
+            {
+                "author": "Karl Heinz",
+                "text": "Lorem ipsum dolor sit amet, consetetur sadipscing elitr, \nsed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet. Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod t"
+            },
+            {
+                "author": "Hans Ludger",
+                "text": "ok is checked"
+            }
+        ]
+    },
+	
+	    {
+        "id": "5_sdfopksdfpoksdfpoksdpof",
+        "label": "execute and review load tests",
+        "status": "executed",
+        "attachments": [
+            {
+                "label": "logfiles",
+                "link": "http://www.heise.de"
+            }
+        ],
+        "comments": [
+            {
+                "author": "Karl Heinz",
+                "text": "Lorem ipsum dolor sit amet, consetetur sadipscing elitr, \nsed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet. Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod t"
+            },
+            {
+                "author": "Hans Ludger",
+                "text": "ok is checked"
+            }
+        ]
+    },
+	
+	    {
+        "id": "6_sdfopksdfpoksdfpoksdpof",
+        "label": "deploy on production system",
+        "status": "open",
+        "attachments": [
+            {
+                "label": "logfiles",
+                "link": "http://www.heise.de"
+            },
+            {
+                "label": "artifacts",
+                "link": "http://www.heise.de"
+            }
+        ],
+        "comments": [
+            {
+                "author": "Karl Heinz",
+                "text": "Lorem ipsum dolor sit amet, consetetur sadipscing elitr, \nsed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet. Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod t"
+            },
+            {
+                "author": "Hans Ludger",
+                "text": "ok is checked"
+            }
+        ]
+    },
+	
+	   {
+        "id": "7_sdfopksdfpoksdfpoksdpof",
+        "label": "switch production systems",
+        "status": "open",
+        "attachments": [],
+        "comments": [
+            {
+                "author": "Karl Heinz",
+                "text": "Lorem ipsum dolor sit amet, consetetur sadipscing elitr, \nsed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet. Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod t"
+            },
+            {
+                "author": "Hans Ludger",
+                "text": "ok is checked"
+            }
+        ]
+    }
+]
+ }

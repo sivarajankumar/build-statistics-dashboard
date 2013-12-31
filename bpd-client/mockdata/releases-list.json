@@ -1,0 +1,16 @@
+[
+	{ "name": "Shop", "system": "Production -DE, AT, NL-", "created": "2013-12-24T15:02+02:00", "id": "werfiowehr92830rh238923298", "version": "123456", "qualityValue": 4 },
+	{ "name": "Shop", "system": "Production -Baltics-", "created": "2013-12-24T15:02+02:00", "id": "werfiowehr92830rh238923298", "version": "223456" },
+	{ "name": "Admintool", "system": "Production - ALL -", "created": "2013-12-24T15:02+02:00", "id": "werfiowehr92830rh238923298", "version": "423456", 
+		"quality": { 
+			"value": 5,
+			"numOfSupportRequests": 10,
+			"numOfOutServerRestarts": 1
+		} 
+	},
+	{ "name": "Admintool", "system": "Production - ALL -", "created": "2013-12-24T15:02+02:00", "id": "werfiowehr92830rh238923298", "version": "523456", "quality": { "value": 8 } },
+	{ "name": "Admintool", "system": "Production - ALL -", "created": "2012-11-04T15:02+02:00", "id": "werfiowehr92830rh238923298", "version": "323456", "quality": { "value": 10 } },
+	{ "name": "Admintool", "system": "Production - ALL -", "created": "2012-11-02T15:02+02:00", "id": "werfiowehr92830rh238923298", "version": "A23456", "quality": { "value": 1 } },
+	{ "name": "Shop", "system": "Production -Scandics-", "created": "2011-11-11T15:02+02:00", "id": "werfiowehr92830rh238923298", "version": "123456" },
+	{ "name": "Shop", "system": "Production -France-", "created": "2011-11-11T15:02+02:00", "id": "werfiowehr92830rh238923298", "version": "123456" }
+]

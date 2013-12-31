@@ -1,0 +1,203 @@
+/* app css stylesheet */
+
+body {
+  padding-top: 20px;
+  padding-left: 10px;
+  padding-right: 10px;
+}
+
+.releases-overview {
+	width: 100%;
+}
+
+.release-images {
+  width: 450px;
+  height: 450px;
+  overflow: hidden;
+  position: relative;
+  float: left;
+}
+
+.releases {
+  list-style: none;
+}
+
+.thumb {
+  float: left;
+  margin: -1em 1em 1.5em 0em;
+  padding-bottom: 1em;
+  height: 100px;
+  width: 100px;
+}
+
+.releases li {
+  clear: both;
+  height: 100px;
+  padding-top: 15px;
+}
+
+/** Detail View **/
+img.release {
+  float: left;
+  margin-right: 3em;
+  margin-bottom: 2em;
+  background-color: white;
+  padding: 2em;
+  height: 400px;
+  width: 400px;
+}
+
+ul.release-thumbs {
+  margin: 0;
+  list-style: none;
+}
+
+ul.release-thumbs li {
+  border: 1px solid black;
+  display: inline-block;
+  margin: 1em;
+  background-color: white;
+}
+
+ul.release-thumbs img {
+  height: 100px;
+  width: 100px;
+  padding: 1em;
+}
+
+ul.release-thumbs img:hover {
+  cursor: pointer;
+}
+
+ul.specs {
+  clear: both;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+ul.specs > li{
+  display: inline;
+  vertical-align: top;  
+}
+
+ul.specs > li:after{ content: " | "; }
+
+h1 {
+  border-bottom: 1px solid gray;
+}
+
+.release-step {
+	width: 250px;
+	height: 130px;
+	border: solid 1px grey;
+	margin: 5px;	
+}
+
+
+.step-header {
+	height: 20%;
+	padding-left: 3px;
+	padding-top: 6px;
+}
+
+.release-metric {
+	width: 250px;
+	height: 270px;
+	border: solid 1px grey;
+	margin: 5px;	
+}
+
+.metric-header {
+	height: 30px;
+	padding-left: 3px;
+	padding-top: 6px;
+}
+
+.metric-footer{
+	height: 20px;
+	padding-left: 3px;
+	padding-top: 3px;
+}
+
+.metric-data {
+	width: 250px;
+	height: 200px;
+}
+
+.step-data {
+	height: 60%;
+	padding-top: 6px;
+	padding-left: 3px;
+	margin-top: 5px;
+	margin-bottom: 3px;
+}
+
+.step-footer {
+	height: 20%;
+	padding-left: 3px;
+	padding-right: 3px;
+	padding-bottom: 3px;
+}
+
+.status-passed {
+	background-color: #9F9;
+}
+
+.status-failed {
+	background-color: #FF8080;
+}
+
+.status-executed {
+	background-color: #FF9;
+}
+
+.status-open {
+	background-color: #D1D1E0;
+}
+
+.single-comment {
+	padding-bottom: 60px;
+}
+
+.post-production-review .metric-header {
+	background-color: #AAA;
+}
+
+.subversion-analysis .metric-header {
+	background-color: #6F6;
+}
+
+.static-code-analysis .metric-header {
+	background-color: #EE0;
+}
+
+.tags {
+	font-size: smaller;
+	font-family: Courier;
+}
+
+.load-tests  .metric-header {
+	background-color: #ABF;
+}
+
+.metric-legend {
+	margin-top: 10px;
+	margin-bottom: 5px;
+	border: 1px solid;
+	padding: 10px;
+}
+
+ul.metric-legend {
+	list-style: none;
+}
+
+ul.metric-legend li {
+	margin-left: 5px;
+	padding: 3px;
+}
+
+ul.metric-legend .this-build { background-color:  #FF3333; }
+ul.metric-legend .average-last-5-builds { background-color:  #C9C9DF; }
+ul.metric-legend .average-last-6to50-builds { background-color:  #CB4B4B; }
+ul.metric-legend .average-last-51to100-builds { background-color:  #4DA74D; }

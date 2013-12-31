@@ -1,0 +1,28 @@
+
+    {
+        "id": "1_sdfopksdfpoksdfpoksdpof",
+        "label": "compile source code",
+        "status": "executed",
+        "attachments": [
+            {
+                "label": "logfiles",
+                "link": "http://www.heise.de"
+            },
+            {
+                "label": "artifacts",
+                "link": "http://www.heise.de"
+            }
+        ],
+        "comments": [
+            {
+                "author": "Karl Heinz",
+                "text": "Lorem ipsum dolor sit amet, consetetur sadipscing elitr, \nsed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet. Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod t",
+				"created": "2012-11-02T12:02+02:00"
+            },
+            {
+                "author": "Hans Ludger",
+                "text": "ok is checked",
+				"created": "2012-11-02T15:02+02:00"
+            }
+        ]		
+    }	

@@ -1,0 +1,47 @@
+<div class="container">
+    
+	<form name="release-create-new" id="release-create-new" class="form-horizontal" role="form" ng-submit="processForm">
+		<div class="form-group">		
+			<label for="input-application" class="col-sm-2 control-label">Application</label>
+			<div class="col-sm-10">
+				<input list="list-applications" 
+					type="text" 
+					class="form-control"
+					id="input-application" name="input-application"
+					ng-model="formData.applicationName"
+					placeholder="Doubleclick to select an application or enter a new one.">
+				<datalist id="list-applications">
+					<option ng-repeat="value in applicationNames" value="{{value}}">
+						{{value}}
+					</option>
+				<datalist>
+			</div>
+		</div>
+		
+		<div class="form-group">		
+			<label for="input-target-system" class="col-sm-2 control-label">Target system</label>
+			<div class="col-sm-10">
+				<input list="list-target-systems" 
+					class="form-control"
+					type="text" 
+					id="input-target-system" name="input-target-system"
+					ng-model="formData.targetSystem"
+					placeholder="Doubleclick to select a system for deployment or enter a new one.">
+				<datalist id="list-target-systems">
+					<option ng-repeat="value in targetSystems" value="{{value}}">
+						{{value}}
+					</option>
+				<datalist>
+			</div>
+		</div>
+		
+		<div class="form-group">
+			<div class="col-sm-offset-2 col-sm-10">
+			<button type="submit" class="btn btn-default">Create release and show steps</button>
+		</div>
+ 
+		<input type="hidden" name="version" value="unknown">
+
+	</form>
+	
+</div>

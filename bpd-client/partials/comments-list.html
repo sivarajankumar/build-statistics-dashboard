@@ -1,0 +1,40 @@
+<div class="container-fluid">
+  
+	<a href="javascript:history.back()">Back</a>
+	
+    <div id="{{step.id}}">
+		<h3>Comments for step '{{step.label}}'</h3>
+		
+		<div ng-repeat="comment in step.comments | orderBy: created" class="single-comment">			
+			<span class="col-sm-2">{{comment.author}} says<br>{{comment.created | date:'medium'}}</span>
+			<div class="col-sm-10">
+				{{comment.text}}
+			</div>
+		</div>
+		
+		<div>
+			<h3>Add new comment</h3>
+			<form class="form-horizontal" role="form" ng-submit="processForm()">
+			  <div class="form-group">
+				<label for="inputEmail3" class="col-sm-2 control-label">Name</label>
+				<div class="col-sm-10">
+				  <input type="text" class="form-control" id="inputEmail3" placeholder="Author" ng-model="formData.author">
+				</div>
+			  </div>
+			  <div class="form-group">
+				<label for="comment-text" class="col-sm-2 control-label">Comment</label>
+				<div class="col-sm-10">
+				  <textarea type="password" class="form-control" id="comment-text" ng-model="formData.text"></textarea>
+				</div>
+			  </div>
+			  <div class="form-group">
+				<div class="col-sm-offset-2 col-sm-10">
+				  <button type="submit" class="btn btn-default">Submit comment</button>
+				</div>
+			  </div>
+			</form>
+
+		</div>
+    </div>
+	
+</div>

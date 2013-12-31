@@ -1,0 +1,54 @@
+<div class="container-fluid">
+  
+    <div class="row-fluid">
+		<form class="form-inline" role="form">
+		
+			<div class="form-group">
+				<input class="form-control" ng-model="query" placeholder="Filter results" id="search-box-filter" list="list-filter-releases" type="text">
+				<!--
+				<datalist id="list-filter-releases" ng-repeat="release in releases track by release.name">
+					<option value="{{release.name}}">{{release.name}}</option>
+				<datalist>
+				-->
+			</div>
+			
+			<div class="form-group">
+				<label for="search-box-order" class="control-label">Sort by:</label>
+				<select  ng-model="orderProp" class="form-control" id="search-box-order">
+					<option value="name">Alphabetical</option>
+					<option value="-created">Newest</option>
+					<option value="-version">Version</option>
+				</select>
+			</div>
+		</form>
+    </div>
+	
+	<div class="row-fluid">
+	
+		<table class="releases-overview">
+			<thead>
+				<tr>
+					<th>&nbsp;</th>
+					<th>Name</th>
+					<th>Version</th>
+					<th>Target System</th>
+					<th>Created on</th>
+				</tr>
+			</thead>
+			<tbody>
+				<tr ng-class-odd="'odd'" ng-class-even="'even'" ng-repeat="release in releases | filter:query | orderBy:orderProp" class="release-listing" id="{{release.id}}">
+					<td>
+						<a class="glyphicon glyphicon-euro" title="Metrics" href="#/release/{{release.id}}/metrics"></a>
+						<a class="glyphicon glyphicon-list" title="Steps" href="#/release/{{release.id}}/steps"></a>
+						<a class="glyphicon glyphicon-remove" ng-click="removeRelease(release.id)" title="Delete release" href="#/releases/delete/{{release.id}}"></a>						
+						<a class="glyphicon glyphicon-certificate" title="Rate this build" href="#/release/{{release.id}}/rate"></a>
+					</td>
+					<td>{{release.name}}</td>
+					<td>{{release.version}}</td>
+					<td>{{release.system}}</td>
+					<td>{{release.created | date}}</td>
+				</tr>
+			</tbody>
+		</table>
+    </div>
+</div>
