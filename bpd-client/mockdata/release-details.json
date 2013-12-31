@@ -4,11 +4,6 @@
 	"created": "2013-12-24 15:02T+2", 
 	"id": "werfiowehr92830rh238923298", 
 	"version": "123456",
-	"quality": {
-			"value": 5,
-			"numOfSupportRequests": 10,
-			"numOfOutServerRestarts": 1
-	},
 	"metrics": [
     {
         "label": "lines in changelog",

@@ -1,6 +1,15 @@
 <div class="container">
+
+	<div class="message {{messageClass}}" ng-show="messages">
+		<ul>
+			<li  ng-repeat="message in messages">
+				<span class="glyphicon glyphicon-info-sign">&nbsp;</span>
+				{{message}}
+			</li>
+		</ul>
+	</div>
     
-	<form name="release-create-new" id="release-create-new" class="form-horizontal" role="form" ng-submit="processForm">
+	<form name="release-create-new" id="release-create-new" class="form-horizontal" role="form" ng-submit="processForm()">
 		<div class="form-group">		
 			<label for="input-application" class="col-sm-2 control-label">Application</label>
 			<div class="col-sm-10">

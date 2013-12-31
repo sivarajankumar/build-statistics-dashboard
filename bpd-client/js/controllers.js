@@ -1,5 +1,17 @@
 'use strict';
 
+var Helpers = {
+	evalFormResult: function(result, $scope, Translator) {
+		if (result.success) {
+			$scope.messages = [ Translator.success() ];
+			$scope.messageClass = 'info';
+		}
+		else {
+			$scope.messages = Translator.errors(result.errors);
+			$scope.messageClass = 'error';
+		}
+	}
+}
 /* Controllers */
 
 var softwareRelasesControllers = angular.module('softwareRelasesControllers', []);
@@ -57,12 +69,15 @@ softwareRelasesControllers.controller('ReleaseStepsListCtrl', ['$scope', '$route
 	};
   }]);
 
-softwareRelasesControllers.controller('CommentsListCtrl', [ '$scope', '$routeParams', 'CommentService', 
-  function($scope, $routeParams, CommentService) {
+softwareRelasesControllers.controller('CommentsListCtrl', [ '$scope', '$routeParams', 'CommentService', 'Translator',
+  function($scope, $routeParams, CommentService, Translator) {
 	$scope.step = CommentService.query($routeParams.stepId);
 	$scope.formData = {};
 	$scope.processForm = function() {
-		$scope.step = CommentService.create($routeParams.stepId, $scope.formData);
+		var result = CommentService.create($routeParams.stepId, $scope.formData);
+
+		$scope.step = result.step;
+		Helpers.evalFormResult(result, $scope, Translator);
 	};
   }]);
   
@@ -71,36 +86,41 @@ softwareRelasesControllers.controller('ReleaseMetricsListCtrl', ['$scope', '$rou
 	$scope.release = ReleaseService.get($routeParams.releaseId);
   }]);
   
-softwareRelasesControllers.controller('SoftwareReleaseCreateCtrl', ['$scope', 'ReleaseService',
-  function($scope, ReleaseService) {
+softwareRelasesControllers.controller('SoftwareReleaseCreateCtrl', ['$scope', 'ReleaseService', 'Translator',
+  function($scope, ReleaseService, Translator) {
 	$scope.formData = {};
 	$scope.targetSystems = ReleaseService.queryDistinctSystems();
 	$scope.applicationNames = ReleaseService.queryDistinctNames();
 
 	$scope.processForm = function() {
-		$scope.release = ReleaseService.createNew($scope.formData);
+		var result = ReleaseService.createNew($scope.formData);
+	
+		$scope.release = result.release;
+
+		Helpers.evalFormResult(result, $scope, Translator);
 	}
 
   }]);  
   
-softwareRelasesControllers.controller('SoftwareReleaseRateCtrl', ['$scope', '$routeParams', 'ReleaseService',
-  function($scope, $routeParams, ReleaseService) {
+softwareRelasesControllers.controller('SoftwareReleaseRateCtrl', ['$scope', '$routeParams', 'ReleaseService', 'Translator',
+  function($scope, $routeParams, ReleaseService, Translator) {
 
+	$scope.formData = [];
 	$scope.release = ReleaseService.get($routeParams.releaseId);
-	$scope.processForm = function() {
-		$scope.release = ReleaseService.rate(
+
+	$scope.processForm = function(form) {
+		var result = ReleaseService.rate(
 			$routeParams.releaseId, 
-			$scope.formData);
-	},
+			form);
+		$scope.release = result.release;
 
-	$scope.findMetricByName = function(metricName) {
-		// Mockdata
-		return 5;
-	}
-
-	$scope.formData = {
-		numOfServerRestarts: $scope.findMetricByName('num-server-restarts'),
-		numOfSupportRequests: $scope.findMetricByName('num-support-requests')
+		Helpers.evalFormResult(result, $scope, Translator);
 	};
 
+
+	$scope.updateFormData = function(metric,form) {
+		form[metric.id] = metric.value;
+	}
   }]);
+
+

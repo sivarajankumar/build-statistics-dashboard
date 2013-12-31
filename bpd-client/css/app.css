@@ -18,7 +18,7 @@ body {
   float: left;
 }
 
-.releases {
+ul {
   list-style: none;
 }
 
@@ -160,25 +160,29 @@ h1 {
 	padding-bottom: 60px;
 }
 
-.post-production-review .metric-header {
+.post-production-review label, .post-production-review .metric-header {
 	background-color: #AAA;
+	padding: 3px;
 }
 
-.subversion-analysis .metric-header {
+.subversion-analysis .metric-header, .subversion-analysis label {
 	background-color: #6F6;
+	padding: 3px;
 }
 
-.static-code-analysis .metric-header {
+.static-code-analysis label, .static-code-analysis .metric-header {
 	background-color: #EE0;
+	padding: 3px;
+}
+
+.load-tests label, .load-tests  .metric-header {
+	background-color: #ABF;
+	padding: 3px;
 }
 
 .tags {
 	font-size: smaller;
 	font-family: Courier;
-}
-
-.load-tests  .metric-header {
-	background-color: #ABF;
 }
 
 .metric-legend {
@@ -201,3 +205,18 @@ ul.metric-legend .this-build { background-color:  #FF3333; }
 ul.metric-legend .average-last-5-builds { background-color:  #C9C9DF; }
 ul.metric-legend .average-last-6to50-builds { background-color:  #CB4B4B; }
 ul.metric-legend .average-last-51to100-builds { background-color:  #4DA74D; }
+
+.message {
+	margin: 5px;
+	padding: 3px;
+	padding-left: 6px;
+	border-radius: 5px;
+}
+
+.info {
+	background-color: #33CC33;
+}
+
+.error {
+	background-color: #FF5050;
+}

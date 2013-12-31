@@ -12,6 +12,32 @@ softwareRelasesServices.factory('Mockdata', ['$resource',
     });
   }]);
 
+softwareRelasesServices.factory('Translator', [ function(){
+
+	return {
+		errors: function (errorKeys) {
+			var texts = [];
+
+			if ( !errorKeys ) return texts;
+
+			for(var i = 0; i < errorKeys.length; i++) {
+				var key = errorKeys[i];
+				if (key == 'error-no-permission') 
+					texts.push("No permission for requested operation.");
+				else 
+					texts.push("Key: " + key);
+					
+			}
+			return texts;
+		},
+
+		success: function() {
+			return 'Data processed successfully';
+		}
+	}
+
+  }]);
+
 softwareRelasesServices.factory('ReleaseStepService', [ 'Mockdata', function(Mockdata) {
 	var service = {
 		delete: function(stepId) {
@@ -29,7 +55,8 @@ softwareRelasesServices.factory('ReleaseStepService', [ 'Mockdata', function(Moc
 	};
 	return service;
   }]);
-softwareRelasesServices.factory('ReleaseService', [ 'Mockdata', function(Mockdata) {
+softwareRelasesServices.factory('ReleaseService', [ 'Mockdata', 
+function(Mockdata) {
 	var ReleaseService = {
 		query: function() {
 			var r = Mockdata.query({ filename: 'releases-list' });
@@ -37,14 +64,25 @@ softwareRelasesServices.factory('ReleaseService', [ 'Mockdata', function(Mockdat
 		},
 
 		rate: function(releaseId, data) {
-			return Mockdata.get({ filename: 'release-details' });
+			var data = Mockdata.get({ filename: 'release-details' });
+			return {
+				success: true,
+				errors: undefined,
+				release: data
+			}
 		},
 
 		createNew: function(releaseData) {
 			var name = releaseData.name;
 			var version = releaseData.version;
 			var system = releaseData.version;
-			return Mockdata.get({ filename: 'release-details' });
+			var data = Mockdata.get({ filename: 'release-details' });
+
+			return {
+				success: true,
+				errors: undefined,
+				release: data
+			};
 		},
 		
 		get: function(releaseId) {
@@ -72,10 +110,16 @@ softwareRelasesServices.factory('PermissionService', [ 'Mockdata', function(Mock
 }]);
 
 
-softwareRelasesServices.factory('CommentService', [ 'Mockdata', function(Mockdata) {
+softwareRelasesServices.factory('CommentService', [ 'Mockdata', 
+function(Mockdata) {
 	var service = {
 		create: function(stepId, data) {
-			return Mockdata.get({ filename: 'steps-details' });	
+			var data = Mockdata.get({ filename: 'steps-details' });	
+			return {
+				success: false,
+				errors: ['error-no-permission'],
+				step: data
+			};
 		},
 		query: function(stepId) {
 			return Mockdata.get({ filename: 'steps-details' });	

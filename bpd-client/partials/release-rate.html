@@ -1,28 +1,37 @@
 <div class="container">
+
+	<div class="message {{messageClass}}" ng-show="messages">
+		<ul>
+			<li  ng-repeat="message in messages">
+				<span class="glyphicon glyphicon-info-sign">&nbsp;</span>
+				{{message}}
+			</li>
+		</ul>
+	</div>
     
 	<form name="release-rate" id="release-rate" class="form-horizontal" role="form" 
-		ng-submit="processForm()">
-		<div class="form-group">		
-			<label for="input-num-support-requests" class="col-sm-2 control-label">Number of created support requests</label>
-			<div class="col-sm-10">
-				<input type="number" 
-					class="form-control"
-					id="input-num-support-requests"
-					name="input-num-support-requests"
-					ng-model="formData.numOfSupportRequests"
-					min="0" max="999">
-			</div>
-		</div>
+		ng-submit="processForm(formData)">
 		
-		<div class="form-group">		
-			<label for="input-num-support-requests" class="col-sm-2 control-label">Number of server restarts</label>
-			<div class="col-sm-10">
-				<input type="number" 
-					class="form-control"
-					id="input-num-server-restarts"
-					name="input-num-server-restarts"
-					ng-model="formData.numOfServerRestarts"
-					min="0" max="999">
+		<div ng-repeat="metric in release.metrics" ng-init="formData[metric.id] = metric.value">
+			<!--
+			-->
+			<pre class="debug">
+formData['{{metric.id}}'] = {{formData[metric.id]}} : {{metric.value}}
+			</pre>
+			<div class="form-group {{metric.types.join(' ')}}">		
+				<label for="input-{{metric.id}}" 
+					class="col-sm-2 control-label">
+					{{metric.label}}
+				</label>
+				<div class="col-sm-10">
+					<input type="number" 
+						class="form-control"
+						id="input-{{metric.id}}"
+						name="input-{{metric.id}}"
+						ng-model="metric.value"
+						ng-change="updateFormData(metric, formData)"
+						min="0" max="999">
+				</div>
 			</div>
 		</div>
 		
@@ -32,5 +41,8 @@
 		</div>
  
 	</form>
+
+	<!-- -->
+	<pre class="debug">{{formData}}</pre>
 	
 </div>
