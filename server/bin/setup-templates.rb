@@ -81,7 +81,6 @@ def createTemplates
 
 	template = createTemplateReleaseConfiguration('Admintool', steps)
 	template.save
-template.save
 end
 
 options = createOptionsOrUsage

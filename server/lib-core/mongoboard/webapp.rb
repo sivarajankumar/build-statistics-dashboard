@@ -14,12 +14,12 @@ module Mongoboard
 			redirect '/releases.json'
 		end
 
-		get '/releases.*' do 
+		get '/releases.json' do 
 			deployments = Release.where(type: 'deployment')
 			json deployments
 		end
 
-		get '/release/:id.*' do |id|
+		get '/release/:id.json' do |id|
 			begin
 				deployment = Release.find(id)
 			rescue Mongoid::Errors::DocumentNotFound
@@ -29,29 +29,33 @@ module Mongoboard
 			end
 		end
 
-		post '/release' do 
+		post '/create-release' do 
 
-			software = params['software']
-			revision = params['revision']
+			name = params['name']
+			version = params['version']
 			system = params['system']
 
 			factory = ReleaseFactory.new
-			release = factory.create software
-			release.revision = revision
+			release = factory.create software, version
 			release.system = system
 			release.save
 
 			json release
 		end
 
-		get '/templates.*' do 
+		get '/templates.json' do 
 			templates = Release.where(type: 'template')
 			json templates
 		end
 
-		get '/releases/systems.*' do 
+		get '/releases/systems.json' do 
 			knownTypes = Release.distinct(:system)
 			json knownTypes
+		end
+
+		get '/releases/names.json' do 
+			knownNames = Release.distinct(:name)
+			json knownNames
 		end
 
 	end
