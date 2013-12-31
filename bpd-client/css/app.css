@@ -103,7 +103,7 @@ h1 {
 
 .release-metric {
 	width: 250px;
-	height: 270px;
+	height: 300px;
 	border: solid 1px grey;
 	margin: 5px;	
 }
@@ -118,6 +118,7 @@ h1 {
 	height: 20px;
 	padding-left: 3px;
 	padding-top: 3px;
+	font-size: smaller;
 }
 
 .metric-data {
@@ -181,7 +182,6 @@ h1 {
 }
 
 .tags {
-	font-size: smaller;
 	font-family: Courier;
 }
 
@@ -219,4 +219,10 @@ ul.metric-legend .average-last-51to100-builds { background-color:  #4DA74D; }
 
 .error {
 	background-color: #FF5050;
+}
+
+input.metric-value {
+	width: 60px;
+	text-align: right;
+	/*height: 20px;*/
 }

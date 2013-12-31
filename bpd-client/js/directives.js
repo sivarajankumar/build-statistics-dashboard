@@ -4,16 +4,8 @@ var softwareRelasesDirectives = angular.module('softwareRelasesDirectives', []);
 
 softwareRelasesDirectives.directive('renderMetric', function() {
 
-	function createEmptyData(label) {
-		return	{
-			data : [[0,null]],
-			label : label,
-			pie: { explode: 8 } 
-		};
-	}
-
 	function labelFormatter(total, value) {
-		if(value === null) {
+		if(value === null || value === undefined) {
 			return null;
 		}
 		if (value > 10000) {
@@ -29,28 +21,68 @@ softwareRelasesDirectives.directive('renderMetric', function() {
 		}		
 	}
 
-	function createWidgetDefinition(metric) {
+	function createWidgetData(metric) {
+		var history = metric.history;
+		var data = [];
+		var record;
+		var i = 0;
 
-		var data = [
-			{ data : [[0,metric.value]], label : 'This build' }
-		];
-
-		var avgLast5Builds = createEmptyData('Average last 5 builds');
-		var avgBuild6to50 = createEmptyData('Average of build 6 to 50');
-
-		for(var i = 0; i < metric.comparisonValues.length; i++) {
-			var v = metric.comparisonValues[i];
-			if (v.type == 'avg-last-5-builds') {
-				avgLast5Builds.data = [[0, v.value]];
-			}
-			if (v.type == 'avg-last-6-builds') {
-				avgBuild6to50.data = [[0, v.value]];
+		if (history != undefined) {
+			for(i = 0; i < history.length; i++) {
+				record = {
+					data: [[i, history[i].value]],
+					label: history[i].created
+				};
+				data.push(record);
 			}
 		}
 
-		data.push(avgLast5Builds);
-		data.push(avgBuild6to50);
+		record = { data : [[i, metric.value]], label : 'This build' };
+		data.push(record);
 
+		return data;
+
+	}
+
+	function createWidgetDefinitionXyChart(data) {
+
+		var betterData = [];
+
+		for(var i = 0; i < data.length; i++) {
+			var item = data[i];
+			if( item != undefined ) {
+				betterData.push(item.data[0]);
+			}
+		}
+
+		var def = {
+			data: [ 
+				betterData 
+			],
+			options: {
+				HtmlText : false,
+				colors: ['#FF3333', '#C9C9DF', '#CB4B4B', '#4DA74D', '#9440ED'],
+				grid : {
+				  verticalLines : true,
+				  horizontalLines : true,
+				  outlineWidth: 0,
+				  minorVerticalLines: true
+				},
+				xaxis : { showLabels : true },
+				yaxis : { showLabels : false },
+				mouse : { track : true },
+				legend : {
+				  position : 'se',
+				  show: false,
+				  backgroundColor : '#D2E8FF'
+				}			
+			}
+		};
+		
+		return def;
+	}
+
+	function createWidgetDefinitionPieChart(data) {
 
 		var def = {
 			data: data,
@@ -81,26 +113,43 @@ softwareRelasesDirectives.directive('renderMetric', function() {
 		return def;
 	}
 
+	function findHistory(id, data) {
+
+	}
+
 	function link(scope, element, attr) {
 	
 		var metric = scope.metric;
 		
+		if(attr.type == 'auto' || type.attr === undefined) {
+			attr.type = 'xy-chart';
+		}
+
+		var data = createWidgetData(metric);
+		var def = undefined;
+
 		if(attr.type == 'pie-chart') {
-			var def = createWidgetDefinition(metric);
+			def = createWidgetDefinitionPieChart(data);
+		}
+		if(attr.type == 'xy-chart') {
+			def = createWidgetDefinitionXyChart(data);
+		}
+		else {
+			element.text('unsupported type: ' + attr.type 
+				+ ', types are: pie-chart, xy-chart, auto');
+		}
+		
+		if(def != undefined) {
 			var domTargetElement = element.parent()[0];
 			Flotr.draw(domTargetElement, def.data, def.options);
 		}
-		else {
-			element.text('unsupported type: ' + attr.type + ', types are: pie-chart');
-		}
-		
 	}
 	
 	var r = {
 		restrict: 'E',
 		link: link,
 		scope: {
-			metric: "=data"
+			metric: "=metric"
 		}
 	};	
 	return r;

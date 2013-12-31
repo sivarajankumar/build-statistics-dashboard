@@ -1,132 +1,466 @@
 [
     {
         "label": "lines in changelog",
-		"types": [ "subversion-analysis", "important" ],
+        "types": [
+            "subversion-analysis",
+            "important"
+        ],
         "id": "changelog",
         "value": 25,
-	"comparisonValues" : [
-		{ 
-		"label": "average of last 5 builds", 
-		"type": "avg-last-5-builds",
-		"value": 18
-		}
-	]
+        "history": [
+            {
+                "value": 18,
+                "created": "2013-10-24 15:02T+2"
+            },
+            {
+                "value": 23,
+                "created": "2013-08-24 15:02T+2"
+            },
+            {
+                "value": 18,
+                "created": "2013-06-24 15:02T+2"
+            },
+            {
+                "value": 19,
+                "created": "2013-05-24 15:02T+2"
+            },
+            {
+                "value": 23,
+                "created": "2013-01-24 15:02T+2"
+            },
+            {
+                "value": 12,
+                "created": "2012-12-24 15:02T+2"
+            },
+            {
+                "value": 12,
+                "created": "2012-11-24 15:02T+2"
+            },
+            {
+                "value": 11,
+                "created": "2012-10-24 15:02T+2"
+            },
+            {
+                "value": 40,
+                "created": "2013-09-24 15:02T+2"
+            }
+        ]
     },
     {
         "label": "code volume",
-		"types": [ "subversion-analysis" ],
+        "types": [
+            "subversion-analysis"
+        ],
         "id": "code-volume",
         "value": 3000,
-	"comparisonValues" : [
-		{ 
-		"label": "average of last 5 builds", 
-		"type": "avg-last-5-builds",
-		"value": 1523
-		}
-	]
+        "history": [
+            {
+                "value": 18,
+                "created": "2013-10-24 15:02T+2"
+            },
+            {
+                "value": 23,
+                "created": "2013-08-24 15:02T+2"
+            },
+            {
+                "value": 18,
+                "created": "2013-06-24 15:02T+2"
+            },
+            {
+                "value": 19,
+                "created": "2013-05-24 15:02T+2"
+            },
+            {
+                "value": 23,
+                "created": "2013-01-24 15:02T+2"
+            },
+            {
+                "value": 12,
+                "created": "2012-12-24 15:02T+2"
+            },
+            {
+                "value": 12,
+                "created": "2012-11-24 15:02T+2"
+            },
+            {
+                "value": 11,
+                "created": "2012-10-24 15:02T+2"
+            },
+            {
+                "value": 40,
+                "created": "2013-09-24 15:02T+2"
+            }
+        ]
     },
     {
         "label": "number of active developers",
-		"types": [ "subversion-analysis" ],
+        "types": [
+            "subversion-analysis"
+        ],
         "id": "num-developers",
         "value": 6,
-	"comparisonValues" : [
-		{ 
-		"label": "average of last 5 builds", 
-		"type": "avg-last-5-builds",
-		"value": 8
-		}
-	]
+        "history": [
+            {
+                "value": 18,
+                "created": "2013-10-24 15:02T+2"
+            },
+            {
+                "value": 23,
+                "created": "2013-08-24 15:02T+2"
+            },
+            {
+                "value": 18,
+                "created": "2013-06-24 15:02T+2"
+            },
+            {
+                "value": 19,
+                "created": "2013-05-24 15:02T+2"
+            },
+            {
+                "value": 23,
+                "created": "2013-01-24 15:02T+2"
+            },
+            {
+                "value": 12,
+                "created": "2012-12-24 15:02T+2"
+            },
+            {
+                "value": 12,
+                "created": "2012-11-24 15:02T+2"
+            },
+            {
+                "value": 11,
+                "created": "2012-10-24 15:02T+2"
+            },
+            {
+                "value": 40,
+                "created": "2013-09-24 15:02T+2"
+            }
+        ]
     },
     {
         "label": "external interfaces involved",
         "id": "num-external-interfaces",
-		"types": [ "static-code-analysis" ],
+        "types": [
+            "static-code-analysis"
+        ],
         "value": 3,
-	"comparisonValues" : [
-		{ 
-		"label": "average of last 5 builds", 
-		"type": "avg-last-6-builds",
-		"value": 3.4
-		}
-	]
+        "history": [
+            {
+                "value": 18,
+                "created": "2013-10-24 15:02T+2"
+            },
+            {
+                "value": 23,
+                "created": "2013-08-24 15:02T+2"
+            },
+            {
+                "value": 18,
+                "created": "2013-06-24 15:02T+2"
+            },
+            {
+                "value": 19,
+                "created": "2013-05-24 15:02T+2"
+            },
+            {
+                "value": 23,
+                "created": "2013-01-24 15:02T+2"
+            },
+            {
+                "value": 12,
+                "created": "2012-12-24 15:02T+2"
+            },
+            {
+                "value": 12,
+                "created": "2012-11-24 15:02T+2"
+            },
+            {
+                "value": 11,
+                "created": "2012-10-24 15:02T+2"
+            },
+            {
+                "value": 40,
+                "created": "2013-09-24 15:02T+2"
+            }
+        ]
     },
     {
         "label": "code complexity",
         "id": "code-complexity",
-		"types": [ "static-code-analysis", "important" ],
+        "types": [
+            "static-code-analysis",
+            "important"
+        ],
         "value": 200,
-	"comparisonValues" : [
-		{ 
-		"label": "average of last 5 builds", 
-		"type": "avg-last-5-builds",
-		"value": 120
-		}
-	]
+        "history": [
+            {
+                "value": 18,
+                "created": "2013-10-24 15:02T+2"
+            },
+            {
+                "value": 23,
+                "created": "2013-08-24 15:02T+2"
+            },
+            {
+                "value": 18,
+                "created": "2013-06-24 15:02T+2"
+            },
+            {
+                "value": 19,
+                "created": "2013-05-24 15:02T+2"
+            },
+            {
+                "value": 23,
+                "created": "2013-01-24 15:02T+2"
+            },
+            {
+                "value": 12,
+                "created": "2012-12-24 15:02T+2"
+            },
+            {
+                "value": 12,
+                "created": "2012-11-24 15:02T+2"
+            },
+            {
+                "value": 11,
+                "created": "2012-10-24 15:02T+2"
+            },
+            {
+                "value": 40,
+                "created": "2013-09-24 15:02T+2"
+            }
+        ]
     },
     {
         "label": "new created support requests",
         "id": "new-support-requests",
-		"types": [ "post-production-review" ],
+        "types": [
+            "post-production-review"
+        ],
         "value": 10,
-	"comparisonValues" : [
-		{ 
-		"label": "average of last 5 builds", 
-		"type": "avg-last-5-builds",
-		"value": 12.4567
-		}
-	]
+        "history": [
+            {
+                "value": 18,
+                "created": "2013-10-24 15:02T+2"
+            },
+            {
+                "value": 23,
+                "created": "2013-08-24 15:02T+2"
+            },
+            {
+                "value": 18,
+                "created": "2013-06-24 15:02T+2"
+            },
+            {
+                "value": 19,
+                "created": "2013-05-24 15:02T+2"
+            },
+            {
+                "value": 23,
+                "created": "2013-01-24 15:02T+2"
+            },
+            {
+                "value": 12,
+                "created": "2012-12-24 15:02T+2"
+            },
+            {
+                "value": 12,
+                "created": "2012-11-24 15:02T+2"
+            },
+            {
+                "value": 11,
+                "created": "2012-10-24 15:02T+2"
+            },
+            {
+                "value": 40,
+                "created": "2013-09-24 15:02T+2"
+            }
+        ]
     },
     {
         "label": "server restarts",
         "id": "server-restarts",
-		"types": [ "post-production-review", "important" ],
+        "types": [
+            "post-production-review",
+            "important"
+        ],
         "value": 1,
-	"comparisonValues" : [
-		{ 
-		"label": "average of last 5 builds", 
-		"type": "avg-last-5-builds",
-		"value": 3.23
-		}
-	]
+        "history": [
+            {
+                "value": 18,
+                "created": "2013-10-24 15:02T+2"
+            },
+            {
+                "value": 23,
+                "created": "2013-08-24 15:02T+2"
+            },
+            {
+                "value": 18,
+                "created": "2013-06-24 15:02T+2"
+            },
+            {
+                "value": 19,
+                "created": "2013-05-24 15:02T+2"
+            },
+            {
+                "value": 23,
+                "created": "2013-01-24 15:02T+2"
+            },
+            {
+                "value": 12,
+                "created": "2012-12-24 15:02T+2"
+            },
+            {
+                "value": 12,
+                "created": "2012-11-24 15:02T+2"
+            },
+            {
+                "value": 11,
+                "created": "2012-10-24 15:02T+2"
+            },
+            {
+                "value": 40,
+                "created": "2013-09-24 15:02T+2"
+            }
+        ]
     },
     {
         "label": "average requests per day",
         "id": "average requests per day",
-		"types": [ "post-production-review" ],
+        "types": [
+            "post-production-review"
+        ],
         "value": 216548.1254,
-	"comparisonValues" : [
-		{ 
-		"label": "average of last 5 builds", 
-		"type": "avg-last-5-builds",
-		"value": 202146.1518
-		}
-	]
+        "history": [
+            {
+                "value": 18,
+                "created": "2013-10-24 15:02T+2"
+            },
+            {
+                "value": 23,
+                "created": "2013-08-24 15:02T+2"
+            },
+            {
+                "value": 18,
+                "created": "2013-06-24 15:02T+2"
+            },
+            {
+                "value": 19,
+                "created": "2013-05-24 15:02T+2"
+            },
+            {
+                "value": 23,
+                "created": "2013-01-24 15:02T+2"
+            },
+            {
+                "value": 12,
+                "created": "2012-12-24 15:02T+2"
+            },
+            {
+                "value": 12,
+                "created": "2012-11-24 15:02T+2"
+            },
+            {
+                "value": 11,
+                "created": "2012-10-24 15:02T+2"
+            },
+            {
+                "value": 40,
+                "created": "2013-09-24 15:02T+2"
+            }
+        ]
     },
-	{
+    {
         "label": "load test: search and tracking",
-		"types": [ "load-tests", "important" ],
+        "types": [
+            "load-tests",
+            "important"
+        ],
         "id": "load-test-01",
         "value": 30,
-	"comparisonValues" : [
-		{ 
-		"label": "average of last 5 builds", 
-		"type": "avg-last-5-builds",
-		"value": 50
-		}
-	]
+        "history": [
+            {
+                "value": 18,
+                "created": "2013-10-24 15:02T+2"
+            },
+            {
+                "value": 23,
+                "created": "2013-08-24 15:02T+2"
+            },
+            {
+                "value": 18,
+                "created": "2013-06-24 15:02T+2"
+            },
+            {
+                "value": 19,
+                "created": "2013-05-24 15:02T+2"
+            },
+            {
+                "value": 23,
+                "created": "2013-01-24 15:02T+2"
+            },
+            {
+                "value": 12,
+                "created": "2012-12-24 15:02T+2"
+            },
+            {
+                "value": 12,
+                "created": "2012-11-24 15:02T+2"
+            },
+            {
+                "value": 11,
+                "created": "2012-10-24 15:02T+2"
+            },
+            {
+                "value": 40,
+                "created": "2013-09-24 15:02T+2"
+            }
+        ]
     },
-	{
+    {
         "label": "load test: login and session handling",
-		"types": [ "load-tests" ],
+        "types": [
+            "load-tests"
+        ],
         "id": "load-test-02",
         "value": 5.2,
-	"comparisonValues" : [
-		{ 
-		"label": "average of last 5 builds", 
-		"type": "avg-last-5-builds",
-		"value": 2.2
-		}
-	]
+        "history": [
+            {
+                "value": 18,
+                "created": "2013-10-24 15:02T+2"
+            },
+            {
+                "value": 23,
+                "created": "2013-08-24 15:02T+2"
+            },
+            {
+                "value": 18,
+                "created": "2013-06-24 15:02T+2"
+            },
+            {
+                "value": 19,
+                "created": "2013-05-24 15:02T+2"
+            },
+            {
+                "value": 23,
+                "created": "2013-01-24 15:02T+2"
+            },
+            {
+                "value": 12,
+                "created": "2012-12-24 15:02T+2"
+            },
+            {
+                "value": 12,
+                "created": "2012-11-24 15:02T+2"
+            },
+            {
+                "value": 11,
+                "created": "2012-10-24 15:02T+2"
+            },
+            {
+                "value": 40,
+                "created": "2013-09-24 15:02T+2"
+            }
+        ]
     }
 ]

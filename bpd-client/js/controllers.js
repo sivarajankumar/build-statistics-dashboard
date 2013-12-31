@@ -81,9 +81,13 @@ softwareRelasesControllers.controller('CommentsListCtrl', [ '$scope', '$routePar
 	};
   }]);
   
-softwareRelasesControllers.controller('ReleaseMetricsListCtrl', ['$scope', '$routeParams', 'ReleaseService',
-  function($scope, $routeParams, ReleaseService) {
+softwareRelasesControllers.controller('ReleaseMetricsListCtrl', ['$scope', '$routeParams', 'ReleaseService', 'MetricService',
+  function($scope, $routeParams, ReleaseService, MetricService) {
 	$scope.release = ReleaseService.get($routeParams.releaseId);
+	$scope.metrics = MetricService.getWithHistory($routeParams.releaseId);
+	$scope.updateMetric = function(metric) {
+		// Mockdata
+	};
   }]);
   
 softwareRelasesControllers.controller('SoftwareReleaseCreateCtrl', ['$scope', 'ReleaseService', 'Translator',

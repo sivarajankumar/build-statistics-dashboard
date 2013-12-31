@@ -127,3 +127,13 @@ function(Mockdata) {
 	};
 	return service;
 }]);
+
+softwareRelasesServices.factory('MetricService', [ 'Mockdata', function(Mockdata) {
+	var service = {
+		getWithHistory: function() {
+			return Mockdata.query({ filename: 'metrics-list' });	
+		}
+	};
+	return service;
+}]);
+
