@@ -2,6 +2,22 @@
 
 var softwareRelasesDirectives = angular.module('softwareRelasesDirectives', []);
 
+softwareRelasesDirectives.directive('ngKeypressEnter', function() {
+	var r = {
+		restrict: 'A',
+		link: function (scope, element, attrs) {
+			element.bind("keydown keypress", function (event) {
+				if(event.which === 13) {
+					scope.$apply(function (){
+						scope.$eval(attrs.ngKeypressEnter);
+					});
+			                event.preventDefault();
+				}
+        		});
+		}
+	};
+	return r
+});
 softwareRelasesDirectives.directive('renderMetric', function() {
 
 	function labelFormatter(total, value) {
@@ -61,7 +77,7 @@ softwareRelasesDirectives.directive('renderMetric', function() {
 			],
 			options: {
 				HtmlText : false,
-				colors: ['#FF3333', '#C9C9DF', '#CB4B4B', '#4DA74D', '#9440ED'],
+				colors: [ '#FF3333' ],
 				grid : {
 				  verticalLines : true,
 				  horizontalLines : true,
@@ -69,7 +85,7 @@ softwareRelasesDirectives.directive('renderMetric', function() {
 				  minorVerticalLines: true
 				},
 				xaxis : { showLabels : true },
-				yaxis : { showLabels : false },
+				yaxis : { showLabels : true },
 				mouse : { track : true },
 				legend : {
 				  position : 'se',

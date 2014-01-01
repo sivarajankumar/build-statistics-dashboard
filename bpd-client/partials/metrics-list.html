@@ -18,21 +18,6 @@
 					<option value="-types">Type (Z-A)</option>
 				</select>
 			</div>
-			<div class="form-group">
-				<button type="button" 
-					onclick="Apprise($('div.metric-legend').html());">
-					Legend
-				</button>
-				<div class="metric-legend" style="display: none;">
-					<h3>Pie chart color definitions:</h3>
-					<ul class="metric-legend">
-						<li class="this-build">Value of this build</li>
-						<li class="average-last-5-builds">Average value of latest 5 builds</li>
-						<li class="average-last-6to50-builds">Average value of build 6 to 50</li>
-						<li class="average-last-51to100-builds">Average value of build 51 to 100</li>
-					</ul>
-				</div>
-			</div>
 		</form>
 	</div>
 	<div class="clearfix"></div>
@@ -55,7 +40,7 @@
 					<div>
 						Value:
 						<input class="metric-value" type="number" 
-							ng-leave="updateMetric(metric)"
+							ng-keypress-enter="updateMetric(metric)"
 							ng-model="metric.value" id="metric_value_{{metric.id}}">
 					</div>
 					<div class="tags">Tags: {{metric.types.join(', ')}}</div>

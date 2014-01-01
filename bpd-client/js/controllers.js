@@ -1,17 +1,6 @@
 'use strict';
 
-var Helpers = {
-	evalFormResult: function(result, $scope, Translator) {
-		if (result.success) {
-			$scope.messages = [ Translator.success() ];
-			$scope.messageClass = 'info';
-		}
-		else {
-			$scope.messages = Translator.errors(result.errors);
-			$scope.messageClass = 'error';
-		}
-	}
-}
+
 /* Controllers */
 
 var softwareRelasesControllers = angular.module('softwareRelasesControllers', []);
@@ -69,29 +58,57 @@ softwareRelasesControllers.controller('ReleaseStepsListCtrl', ['$scope', '$route
 	};
   }]);
 
-softwareRelasesControllers.controller('CommentsListCtrl', [ '$scope', '$routeParams', 'CommentService', 'Translator',
-  function($scope, $routeParams, CommentService, Translator) {
+softwareRelasesControllers.controller('CommentsListCtrl', [ '$scope', '$routeParams', 'CommentService', 
+  function($scope, $routeParams, CommentService) {
 	$scope.step = CommentService.query($routeParams.stepId);
 	$scope.formData = {};
 	$scope.processForm = function() {
 		var result = CommentService.create($routeParams.stepId, $scope.formData);
 
 		$scope.step = result.step;
-		Helpers.evalFormResult(result, $scope, Translator);
+		Helpers.evalFormResult(result, $scope);
 	};
   }]);
   
 softwareRelasesControllers.controller('ReleaseMetricsListCtrl', ['$scope', '$routeParams', 'ReleaseService', 'MetricService',
   function($scope, $routeParams, ReleaseService, MetricService) {
 	$scope.release = ReleaseService.get($routeParams.releaseId);
-	$scope.metrics = MetricService.getWithHistory($routeParams.releaseId);
+	$scope.metrics = MetricService.queryHistory($routeParams.releaseId);
 	$scope.updateMetric = function(metric) {
-		// Mockdata
+
+		var inputField = $('#metric_value_' + metric.id);
+
+		
+		var value = parseFloat(metric.value);
+		if(isNaN(value)) {
+			inputField.removeClass('info');
+			inputField.addClass('error');
+			return;
+		}
+
+		var result = MetricService.saveValue({ 
+			releaseId: $routeParams.releaseId, 
+			metric: { 
+				id: metric.id,
+				value: metric.value
+			}
+		});
+
+		if (result.success) {
+			inputField.removeClass('error');
+			inputField.addClass('info');
+		}
+		else {
+			inputField.removeClass('info');
+			inputField.addClass('error');
+		}
+
+		
 	};
   }]);
   
-softwareRelasesControllers.controller('SoftwareReleaseCreateCtrl', ['$scope', 'ReleaseService', 'Translator',
-  function($scope, ReleaseService, Translator) {
+softwareRelasesControllers.controller('SoftwareReleaseCreateCtrl', ['$scope', 'ReleaseService',
+  function($scope, ReleaseService) {
 	$scope.formData = {};
 	$scope.targetSystems = ReleaseService.queryDistinctSystems();
 	$scope.applicationNames = ReleaseService.queryDistinctNames();
@@ -101,13 +118,13 @@ softwareRelasesControllers.controller('SoftwareReleaseCreateCtrl', ['$scope', 'R
 	
 		$scope.release = result.release;
 
-		Helpers.evalFormResult(result, $scope, Translator);
+		Helpers.evalFormResult(result, $scope);
 	}
 
   }]);  
   
-softwareRelasesControllers.controller('SoftwareReleaseRateCtrl', ['$scope', '$routeParams', 'ReleaseService', 'Translator',
-  function($scope, $routeParams, ReleaseService, Translator) {
+softwareRelasesControllers.controller('SoftwareReleaseRateCtrl', ['$scope', '$routeParams', 'ReleaseService', 
+  function($scope, $routeParams, ReleaseService) {
 
 	$scope.formData = [];
 	$scope.release = ReleaseService.get($routeParams.releaseId);
@@ -118,7 +135,7 @@ softwareRelasesControllers.controller('SoftwareReleaseRateCtrl', ['$scope', '$ro
 			form);
 		$scope.release = result.release;
 
-		Helpers.evalFormResult(result, $scope, Translator);
+		Helpers.evalFormResult(result, $scope);
 	};
 
 

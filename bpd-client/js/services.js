@@ -12,32 +12,6 @@ softwareRelasesServices.factory('Mockdata', ['$resource',
     });
   }]);
 
-softwareRelasesServices.factory('Translator', [ function(){
-
-	return {
-		errors: function (errorKeys) {
-			var texts = [];
-
-			if ( !errorKeys ) return texts;
-
-			for(var i = 0; i < errorKeys.length; i++) {
-				var key = errorKeys[i];
-				if (key == 'error-no-permission') 
-					texts.push("No permission for requested operation.");
-				else 
-					texts.push("Key: " + key);
-					
-			}
-			return texts;
-		},
-
-		success: function() {
-			return 'Data processed successfully';
-		}
-	}
-
-  }]);
-
 softwareRelasesServices.factory('ReleaseStepService', [ 'Mockdata', function(Mockdata) {
 	var service = {
 		delete: function(stepId) {
@@ -130,8 +104,25 @@ function(Mockdata) {
 
 softwareRelasesServices.factory('MetricService', [ 'Mockdata', function(Mockdata) {
 	var service = {
-		getWithHistory: function() {
+		queryHistory: function() {
 			return Mockdata.query({ filename: 'metrics-list' });	
+		},
+		saveValue: function(data) {
+			var releaseId = data.releaseId;
+			var metricId = data.metric.id;
+			var metricValue = data.metric.value; // make it a number
+
+			var result = {
+				success: true,
+				value: metricValue
+			};
+			
+			// Mockdata to show color changes on gui
+			if (metricValue <= 0) {
+				result.success = false;
+			}
+
+			return result;
 		}
 	};
 	return service;
