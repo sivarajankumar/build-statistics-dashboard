@@ -2,7 +2,7 @@
 
 
 function toUrl(path) {
-	return 'http://localhost:4567/'+path;
+	return '/'+path;
 }
 
 var softwareRelasesServices = angular.module('softwareRelasesServices', ['ngResource']);
@@ -36,8 +36,8 @@ softwareRelasesServices.factory('ReleaseService', [ 'Mockdata', '$http',
 function(Mockdata, $http) {
 	var ReleaseService = {
 		query: function() {
-			var r = Mockdata.query({ filename: 'releases-list' });
-			return r;
+			var promise = $http.get(toUrl('releases.json'));
+			return promise;
 		},
 
 		rate: function(releaseId, data) {

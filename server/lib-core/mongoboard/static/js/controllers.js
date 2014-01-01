@@ -7,8 +7,8 @@ var softwareRelasesControllers = angular.module('softwareRelasesControllers', []
 
 softwareRelasesControllers.controller('SoftwareReleaseListCtrl', ['$scope', 'ReleaseService',
   function($scope, ReleaseService) {
-    $scope.releases = ReleaseService.query();
-    $scope.orderProp = 'created';
+	ReleaseService.query().success(function(data) { $scope.releases = data; });
+	$scope.orderProp = 'created';
 	
 	$scope.removeRelease = function(id) {
 		$('#' + id).remove();
@@ -110,15 +110,15 @@ softwareRelasesControllers.controller('ReleaseMetricsListCtrl', ['$scope', '$rou
 softwareRelasesControllers.controller('SoftwareReleaseCreateCtrl', ['$scope', 'ReleaseService',
   function($scope, ReleaseService) {
 	$scope.formData = {};
-	$scope.targetSystems = ReleaseService.queryDistinctSystems();
-	$scope.applicationNames = ReleaseService.queryDistinctNames();
+	ReleaseService.queryDistinctSystems().success(function(data) { $scope.targetSystems = data });
+	ReleaseService.queryDistinctNames().success(function(data) { $scope.applicationNames = data; });
 
 	$scope.processForm = function() {
-		var result = ReleaseService.createNew($scope.formData);
-	
-		$scope.release = result.release;
+		ReleaseService.createNew($scope.formData).success(function(result) {
+			$scope.release = result.release;
+			Helpers.evalFormResult(result, $scope);
+		});
 
-		Helpers.evalFormResult(result, $scope);
 	}
 
   }]);  

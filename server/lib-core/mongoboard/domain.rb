@@ -18,7 +18,7 @@ module Mongoboard
 			release.name = name
 			release.system = template.system
 			release.type = :release_candidate
-			release.version = 'unknown'
+			release.version = version
 
 			template.steps.each do |step|
 				release.steps.push step.clone

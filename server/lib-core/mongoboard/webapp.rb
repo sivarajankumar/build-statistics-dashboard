@@ -15,7 +15,7 @@ module Mongoboard
 		end
 
 		get '/releases.json' do 
-			deployments = Release.where(type: 'deployment')
+			deployments = Release.where(type: 'release_candidate')
 			json deployments
 		end
 
