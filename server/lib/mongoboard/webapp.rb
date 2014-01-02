@@ -29,6 +29,15 @@ module Mongoboard
 			end
 		end
 
+		delete '/release/:id.json' do |id|
+			begin
+				deployment = Release.find(id)
+				deployment.delete()
+			rescue Mongoid::Errors::DocumentNotFound
+				status 404
+			end
+		end
+
 		post '/create-release' do 
 
 			name = params['name']
@@ -36,7 +45,7 @@ module Mongoboard
 			system = params['system']
 
 			factory = ReleaseFactory.new
-			release = factory.create software, version
+			release = factory.create name, version
 			release.system = system
 			release.save
 
@@ -54,9 +63,40 @@ module Mongoboard
 		end
 
 		get '/releases/names.json' do 
-			knownNames = Release.where(type: 'release_candidate').distinct(:name)
+			knownNames = Release.where(type: 'template').distinct(:name)
 			json knownNames
 		end
 
+		post '/release/step/:id.json' do |id|
+			status = params['status']
+
+			begin
+				step = Step.find(id)
+				step.status = status
+			rescue Mongoid::Errors::DocumentNotFound
+				status 404
+			else
+				json step
+			end
+		end
+
+		delete '/release/step/:id.json' do |id|
+			begin
+				step = Step.find(id)
+				step.delete()
+			rescue Mongoid::Errors::DocumentNotFound
+				status 404
+			end
+		end
+
+		get '/release/step/:id.json' do |id|
+			begin
+				step = Step.find(id)
+			rescue Mongoid::Errors::DocumentNotFound
+				status 404
+			else
+				json step
+			end
+		end
 	end
 end

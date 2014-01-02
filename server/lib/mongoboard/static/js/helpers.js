@@ -1,13 +1,11 @@
 var Helpers = {
-	evalFormResult: function(result, $scope) {
-		if (result.success) {
+	evalFormResultSuccess: function($scope) {
 			$scope.messages = [ Translator.success() ];
 			$scope.messageClass = 'info';
-		}
-		else {
+	},
+	evalFormResultError: function(result, $scope) {
 			$scope.messages = Translator.errors(result.errors);
 			$scope.messageClass = 'error';
-		}
 	}
 };
 

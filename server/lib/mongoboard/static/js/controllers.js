@@ -11,6 +11,7 @@ softwareRelasesControllers.controller('SoftwareReleaseListCtrl', ['$scope', 'Rel
 	$scope.orderProp = 'created';
 	
 	$scope.removeRelease = function(id) {
+		ReleaseService.delete(id);
 		$('#' + id).remove();
 	};
   }]);
@@ -46,7 +47,7 @@ softwareRelasesControllers.controller('ReleaseStepsListCtrl', ['$scope', '$route
 		
 		if(!clazzAlreadySet) {
 			div.addClass('status-' + newStatus);
-			ReleaseStepService.saveNewStatus(newStatus);
+			ReleaseStepService.saveNewStatus(stepId, newStatus);
 
 			if(newStatus == 'passed') {
 				alert("Step passed. Server scripts will start as configured");
@@ -67,7 +68,7 @@ softwareRelasesControllers.controller('CommentsListCtrl', [ '$scope', '$routePar
 		CommentService.create($routeParams.stepId, $scope.formData).success(
 			function(result) {
 				$scope.step = result.step;
-				Helpers.evalFormResult(result, $scope);
+				Helpers.evalFormResultSuccess($scope);
 			}
 		);
 	};
@@ -120,9 +121,12 @@ softwareRelasesControllers.controller('SoftwareReleaseCreateCtrl', ['$scope', 'R
 	ReleaseService.queryDistinctNames().success(function(data) { $scope.applicationNames = data; });
 
 	$scope.processForm = function() {
-		ReleaseService.createNew($scope.formData).success(function(result) {
-			$scope.release = result.release;
-			Helpers.evalFormResult(result, $scope);
+		ReleaseService.createNew($scope.formData)
+		.then(function(result) {
+			$scope.release = result;
+			Helpers.evalFormResultSuccess($scope);
+		}, function(result) {
+			Helpers.evalFormResultError(result, $scope);
 		});
 
 	}
@@ -138,8 +142,8 @@ softwareRelasesControllers.controller('SoftwareReleaseRateCtrl', ['$scope', '$ro
 	$scope.processForm = function(form) {
 	ReleaseService.rate($routeParams.releaseId, form)
 		.success(function(result) {
-			$scope.release = result.release;
-			Helpers.evalFormResult(result, $scope);
+			$scope.release = result;
+			Helpers.evalFormResultSuccess(result, $scope);
 		});
 	};
 

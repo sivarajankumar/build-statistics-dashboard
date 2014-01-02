@@ -16,18 +16,21 @@ softwareRelasesServices.factory('Mockdata', ['$http',
 	};
   }]);
 
-softwareRelasesServices.factory('ReleaseStepService', [ 'Mockdata', function(Mockdata) {
+softwareRelasesServices.factory('ReleaseStepService', [ '$http', function($http) {
 	var service = {
 		delete: function(stepId) {
-
+			var promise = $http.delete(toUrl('release/step/' + stepId + '.json'));
+			return promise;
 		},
 
 		saveNewStatus: function(stepId, newStatus) {
-
+			var promise = $http.post(toUrl('release/step/' + stepId + '.json?status=' + newStatus));
+			return promise;
 		},
 
 		get: function(stepId) {
-			return Mockdata.get({ filename: 'steps-details' });
+			var promise = $http.get(toUrl('release/step/' + stepId + '.json'));
+			return promise;
 		},
 
 	};
@@ -53,18 +56,15 @@ function(Mockdata, $http) {
 		createNew: function(releaseData) {
 			var name = releaseData.name;
 			var version = releaseData.version;
-			var system = releaseData.version;
-			var data = Mockdata.get({ filename: 'release-details' });
-
-			return {
-				success: true,
-				errors: undefined,
-				release: data
-			};
+			var system = releaseData.system;
+			
+			var promise = $http.post(toUrl('create-release?name=' + name + '&version=' + version + '&system=' + system));
+			return promise;
 		},
 		
 		get: function(releaseId) {
-			return Mockdata.get({ filename: 'release-details' });
+			var promise = $http.get(toUrl('release/' + releaseId + '.json'));
+			return promise;
 		},
 
 		queryDistinctNames: function() {
@@ -76,6 +76,11 @@ function(Mockdata, $http) {
 			var promise = $http.get(toUrl('releases/systems.json'));
 			return promise;
 		},
+		
+		delete: function(id) {
+			var promise = $http.delete(toUrl('release/' + id + '.json'));
+			return promise;
+		}
 	};
 	return ReleaseService;
 }]);

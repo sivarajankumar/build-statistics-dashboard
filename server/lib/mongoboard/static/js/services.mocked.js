@@ -1,15 +1,19 @@
 'use strict';
 
 
- 
+function toUrl(path) {
+	return '/'+path;
+}
+
 var softwareRelasesServices = angular.module('softwareRelasesServices', ['ngResource']);
 
 
-softwareRelasesServices.factory('Mockdata', ['$resource',
-  function($resource){
-    return $resource('mockdata/:filename.json', {}, {
-      query: {method:'GET', params: { filename: 'releases-list' }, isArray:true}
-    });
+softwareRelasesServices.factory('Mockdata', ['$http',
+  function($http){
+	return  {
+		query: function(data) { return $http.get('mockdata/' + data.filename + '.json'); },
+		get: function(data) { return $http.get('mockdata/' + data.filename + '.json'); },
+	};
   }]);
 
 softwareRelasesServices.factory('ReleaseStepService', [ 'Mockdata', function(Mockdata) {
@@ -29,12 +33,12 @@ softwareRelasesServices.factory('ReleaseStepService', [ 'Mockdata', function(Moc
 	};
 	return service;
   }]);
-softwareRelasesServices.factory('ReleaseService', [ 'Mockdata', 
-function(Mockdata) {
+softwareRelasesServices.factory('ReleaseService', [ 'Mockdata', '$http',
+function(Mockdata, $http) {
 	var ReleaseService = {
 		query: function() {
-			var r = Mockdata.query({ filename: 'releases-list' });
-			return r;
+			var promise = $http.get(toUrl('releases.json'));
+			return promise;
 		},
 
 		rate: function(releaseId, data) {
@@ -64,11 +68,13 @@ function(Mockdata) {
 		},
 
 		queryDistinctNames: function() {
-			return ['Shop', 'Admintool'];
+			var promise = $http.get(toUrl('releases/names.json'));
+			return promise;
 		},
 
 		queryDistinctSystems: function() {
-			return ['Western Europe Production', 'Eastern Europe Production'];
+			var promise = $http.get(toUrl('releases/systems.json'));
+			return promise;
 		},
 	};
 	return ReleaseService;
