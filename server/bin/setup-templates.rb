@@ -1,6 +1,6 @@
 #!/usr/bin/env ruby
 
-$:.unshift File.dirname(__FILE__) + '/../lib-core'
+$:.unshift File.dirname(__FILE__) + '/../lib'
 
 require 'mongoboard/domain'
 require 'optparse'
