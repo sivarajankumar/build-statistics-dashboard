@@ -3,7 +3,7 @@
     <div ng-repeat="step in release.steps" class="release-step pull-left" id="{{step._id}}">
 		<div class="step-header">
 			<strong>{{step.label}}</strong>
-			<a class="pull-right glyphicon glyphicon-remove" ng-click="removeStep(step._id)" data-stepid="{{step._id}}"></a>
+			<a class="pull-right glyphicon glyphicon-remove" ng-click="removeStep(release._id, step._id)" data-stepid="{{step._id}}"></a>
 		</div>
 		
 		<div class="step-data status-{{step.status}}">
@@ -18,13 +18,13 @@
 				<a class="glyphicon glyphicon-tasks cmd-show-comments" href="#/release/{{release._id}}/step/{{step._id}}/comments" title="show / add comments"></a> 
 			</span>
 			<span class="pull-right">				
-				<a class="glyphicon glyphicon-plus cmd-set-status" ng-click="updateStatus('open', step._id)" title="set status: open"></a>
+				<a class="glyphicon glyphicon-plus cmd-set-status" ng-click="updateStatus('open', step._id, release._id)" title="set status: open"></a>
 				-
-				<a class="glyphicon glyphicon-play cmd-set-status" ng-click="updateStatus('executed', step._id)" title="set status: executed"></a>				
+				<a class="glyphicon glyphicon-play cmd-set-status" ng-click="updateStatus('executed', step._id, release._id)" title="set status: executed"></a>				
 				-
-				<a class="glyphicon glyphicon-flash cmd-set-status" ng-click="updateStatus('failed', step._id)" title="set status: failed"></a>
+				<a class="glyphicon glyphicon-flash cmd-set-status" ng-click="updateStatus('failed', step._id, release._id)" title="set status: failed"></a>
 				-
-				<a class="glyphicon glyphicon-ok cmd-set-status" ng-click="updateStatus('passed', step._id)" title="set status: passed"></a>
+				<a class="glyphicon glyphicon-ok cmd-set-status" ng-click="updateStatus('passed', step._id, release._id)" title="set status: passed"></a>
 			</span>
 		</div>
     </div>

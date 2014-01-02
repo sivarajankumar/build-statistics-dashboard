@@ -20,12 +20,13 @@ softwareRelasesControllers.controller('ReleaseStepsListCtrl', ['$scope', '$route
   function($scope, $routeParams, ReleaseService, ReleaseStepService) {
 	ReleaseService.get($routeParams.releaseId).success(function(data) { $scope.release = data; });
 	
-	$scope.removeStep = function(stepId) {
-		ReleaseStepService.delete(stepId);
-		$('#' + stepId).remove();
+	$scope.removeStep = function(releaseId, stepId) {
+		ReleaseStepService.delete(releaseId, stepId).success(function() {
+			$('#' + stepId).remove();
+		});
 	};
 	
-	$scope.updateStatus = function(newStatus, stepId) {
+	$scope.updateStatus = function(newStatus, stepId, releaseId) {
 		var div = $('#' + stepId + ' div.step-data');
 		var allClasses = div.attr('class');
 		var array = allClasses.split(" ");
@@ -46,12 +47,15 @@ softwareRelasesControllers.controller('ReleaseStepsListCtrl', ['$scope', '$route
 		}
 		
 		if(!clazzAlreadySet) {
-			div.addClass('status-' + newStatus);
-			ReleaseStepService.saveNewStatus(stepId, newStatus);
+			ReleaseStepService.saveNewStatus(stepId, newStatus).then(function() {
+				div.addClass('status-' + newStatus);
+				if(newStatus == 'passed') {
+					alert("Step passed. Server scripts will start as configured");
+				}
+			}, function() {
+				alert("Server responded an error");
+			});
 
-			if(newStatus == 'passed') {
-				alert("Step passed. Server scripts will start as configured");
-			}
 		}
 		else {
 			alert("Status already set. Will not set it twice.");
@@ -61,12 +65,13 @@ softwareRelasesControllers.controller('ReleaseStepsListCtrl', ['$scope', '$route
 
 softwareRelasesControllers.controller('CommentsListCtrl', [ '$scope', '$routeParams', 'CommentService', 
   function($scope, $routeParams, CommentService) {
-	CommentService.query($routeParams.stepId).success(function(data) { $scope.step = data });
+	CommentService.query($routeParams.releaseId, $routeParams.stepId)
+		.success(function(data) { $scope.step = data });
 
 	$scope.formData = {};
 	$scope.processForm = function() {
-		CommentService.create($routeParams.stepId, $scope.formData).success(
-			function(result) {
+		CommentService.create($routeParams.releaseId, $routeParams.stepId, $scope.formData)
+			.success(function(result) {
 				$scope.step = result.step;
 				Helpers.evalFormResultSuccess($scope);
 			}

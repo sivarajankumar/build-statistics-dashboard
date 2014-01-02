@@ -1,4 +1,5 @@
 
+require 'moped'
 require 'sinatra/base'
 require 'sinatra/respond_with'
 require 'sinatra/contrib'
@@ -71,8 +72,13 @@ module Mongoboard
 			status = params['status']
 
 			begin
-				step = Step.find(id)
-				step.status = status
+				bsonId = Moped::BSON::ObjectId(id)
+				release = Release.where('steps._id' => bsonId).first()
+				step = release.steps.find(id)
+				step.status = status if status != nil
+
+				step.save
+
 			rescue Mongoid::Errors::DocumentNotFound
 				status 404
 			else
@@ -80,18 +86,20 @@ module Mongoboard
 			end
 		end
 
-		delete '/release/step/:id.json' do |id|
+		delete '/release/:releaseId/step/:stepId.json' do |releaseId, stepId|
 			begin
-				step = Step.find(id)
+				release = Release.find(releaseId)
+				step = release.steps.find(stepId)
 				step.delete()
 			rescue Mongoid::Errors::DocumentNotFound
 				status 404
 			end
 		end
 
-		get '/release/step/:id.json' do |id|
+		get '/release/:releaseId/step/:stepId.json' do |releaseId, stepId|
 			begin
-				step = Step.find(id)
+				release = Release.find(releaseId)
+				step = release.steps.find(stepId)
 			rescue Mongoid::Errors::DocumentNotFound
 				status 404
 			else

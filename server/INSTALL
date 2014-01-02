@@ -1,0 +1,8 @@
+
+GEMS:
+
+ - sinatra
+ - json
+ - rspec (tests)
+ - mongoid 3
+ 	- moped

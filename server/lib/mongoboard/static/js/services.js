@@ -95,19 +95,16 @@ softwareRelasesServices.factory('PermissionService', [ 'Mockdata', function(Mock
 }]);
 
 
-softwareRelasesServices.factory('CommentService', [ 'Mockdata', 
-function(Mockdata) {
+softwareRelasesServices.factory('CommentService', [ '$http', 'Mockdata', 
+function($http, Mockdata) {
 	var service = {
-		create: function(stepId, data) {
+		create: function(releaseId, stepId, data) {
 			var data = Mockdata.get({ filename: 'steps-details' });	
-			return {
-				success: false,
-				errors: ['error-no-permission'],
-				step: data
-			};
+			return data;
 		},
-		query: function(stepId) {
-			return Mockdata.get({ filename: 'steps-details' });	
+		query: function(releaseId, stepId) {
+			var promise = $http.get(toUrl('release/' + releaseId + '/step/' + stepId + '.json'));
+			return promise;
 		}
 	};
 	return service;
