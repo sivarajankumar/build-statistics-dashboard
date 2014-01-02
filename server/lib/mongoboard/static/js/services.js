@@ -18,18 +18,18 @@ softwareRelasesServices.factory('Mockdata', ['$http',
 
 softwareRelasesServices.factory('ReleaseStepService', [ '$http', function($http) {
 	var service = {
-		delete: function(stepId) {
-			var promise = $http.delete(toUrl('release/step/' + stepId + '.json'));
+		delete: function(releaseId, stepId) {
+			var promise = $http.delete(toUrl('release/' + releaseId + '/step/' + stepId + '.json'));
 			return promise;
 		},
 
-		saveNewStatus: function(stepId, newStatus) {
-			var promise = $http.post(toUrl('release/step/' + stepId + '.json?status=' + newStatus));
+		saveNewStatus: function(releaseId, stepId, newStatus) {
+			var promise = $http.post(toUrl('release/' + releaseId + '/step/' + stepId + '.json?status=' + newStatus));
 			return promise;
 		},
 
-		get: function(stepId) {
-			var promise = $http.get(toUrl('release/step/' + stepId + '.json'));
+		get: function(releaseId, stepId) {
+			var promise = $http.get(toUrl('release/' + releaseId + '/step/' + stepId + '.json'));
 			return promise;
 		},
 
@@ -44,21 +44,12 @@ function(Mockdata, $http) {
 			return promise;
 		},
 
-		rate: function(releaseId, data) {
-			var data = Mockdata.get({ filename: 'release-details' });
-			return {
-				success: true,
-				errors: undefined,
-				release: data
-			}
-		},
-
 		createNew: function(releaseData) {
 			var name = releaseData.name;
 			var version = releaseData.version;
 			var system = releaseData.system;
 			
-			var promise = $http.post(toUrl('create-release?name=' + name + '&version=' + version + '&system=' + system));
+			var promise = $http.post(toUrl('release.json?name=' + name + '&version=' + version + '&system=' + system));
 			return promise;
 		},
 		
@@ -95,13 +86,21 @@ softwareRelasesServices.factory('PermissionService', [ 'Mockdata', function(Mock
 }]);
 
 
-softwareRelasesServices.factory('CommentService', [ '$http', 'Mockdata', 
-function($http, Mockdata) {
+softwareRelasesServices.factory('CommentService', [ '$http', 
+function($http) {
 	var service = {
 		create: function(releaseId, stepId, data) {
-			var data = Mockdata.get({ filename: 'steps-details' });	
-			return data;
+			var url = toUrl('release/' + releaseId + '/step/' + stepId + '/comment.json');
+			var xsrf = $.param({ author: data.author, text: data.text }); // make it a string
+			var promise = $http({
+				method: 'POST',
+				url: url,
+				data: xsrf,
+				headers: {'Content-Type': 'application/x-www-form-urlencoded'}
+			});
+			return promise;
 		},
+
 		query: function(releaseId, stepId) {
 			var promise = $http.get(toUrl('release/' + releaseId + '/step/' + stepId + '.json'));
 			return promise;
@@ -112,9 +111,10 @@ function($http, Mockdata) {
 
 softwareRelasesServices.factory('MetricService', [ 'Mockdata', function(Mockdata) {
 	var service = {
-		queryHistory: function() {
+		queryHistory: function(releaseId) {
 			return Mockdata.query({ filename: 'metrics-list' });	
 		},
+
 		saveValue: function(data) {
 			var releaseId = data.releaseId;
 			var metricId = data.metric.id;

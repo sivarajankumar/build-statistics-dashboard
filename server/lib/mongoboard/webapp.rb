@@ -39,7 +39,7 @@ module Mongoboard
 			end
 		end
 
-		post '/create-release' do 
+		post '/release.json' do 
 
 			name = params['name']
 			version = params['version']
@@ -68,13 +68,11 @@ module Mongoboard
 			json knownNames
 		end
 
-		post '/release/step/:id.json' do |id|
+		post '/release/:releaseId/step/:stepId.json' do |releaseId, stepId|
 			status = params['status']
 
 			begin
-				bsonId = Moped::BSON::ObjectId(id)
-				release = Release.where('steps._id' => bsonId).first()
-				step = release.steps.find(id)
+				step = findStep(releaseId, stepId)
 				step.status = status if status != nil
 
 				step.save
@@ -88,8 +86,7 @@ module Mongoboard
 
 		delete '/release/:releaseId/step/:stepId.json' do |releaseId, stepId|
 			begin
-				release = Release.find(releaseId)
-				step = release.steps.find(stepId)
+				step = findStep(releaseId, stepId)
 				step.delete()
 			rescue Mongoid::Errors::DocumentNotFound
 				status 404
@@ -98,13 +95,84 @@ module Mongoboard
 
 		get '/release/:releaseId/step/:stepId.json' do |releaseId, stepId|
 			begin
-				release = Release.find(releaseId)
-				step = release.steps.find(stepId)
+				step = findStep(releaseId, stepId)
 			rescue Mongoid::Errors::DocumentNotFound
 				status 404
 			else
 				json step
 			end
+		end
+
+		post '/release/:releaseId/step/:stepId/comment.json' do |releaseId, stepId|
+
+			author = params['author']
+			text = params['text']
+
+			comment = Comment.new
+			comment.author = author
+			comment.text = text
+
+			begin
+				step = findStep(releaseId, stepId)
+
+				step.comments.push comment
+				step.save!
+
+			rescue Mongoid::Errors::DocumentNotFound
+				status 404
+			else
+				json step
+			end
+		end
+
+		post '/release/:releaseId/step/:stepId/attachment/label.json' do |releaseId, stepId|
+
+			attachment = LabelAttachment.new
+			attachment.href = params['label']
+
+			begin
+				step = findStep(releaseId, stepId)
+
+				step.attachments.push comment
+				step.save!
+
+			rescue Mongoid::Errors::DocumentNotFound
+				status 404
+			else
+				json attachment
+			end
+
+		end
+
+		post '/release/:releaseId/step/:stepId/attachment/href.json' do |releaseId, stepId|
+
+			mimeType = params['mime-type']
+			link = params['link']
+
+			attachment = HrefAttachment.new
+			attachment.mimeType = mimeType if not mimeType.nil?
+			attachment.href = link
+
+			begin
+				step = findStep(releaseId, stepId)
+
+				step.attachments.push comment
+				step.save!
+
+			rescue Mongoid::Errors::DocumentNotFound
+				status 404
+			else
+				json attachment
+			end
+
+		end
+
+		private
+
+		def findStep(releaseId, stepId)
+			release = Release.find(releaseId)
+			step = release.steps.find(stepId)
+			step
 		end
 	end
 end

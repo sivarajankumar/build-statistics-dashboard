@@ -37,10 +37,6 @@ phonecatApp.config(['$routeProvider',
         templateUrl: 'partials/release-create-new.html',
         controller: 'SoftwareReleaseCreateCtrl'
       }).
-	  when('/release/:releaseId/rate', {
-        templateUrl: 'partials/release-rate.html',
-        controller: 'SoftwareReleaseRateCtrl'
-      }).	  
       otherwise({
         redirectTo: '/releases'
       });

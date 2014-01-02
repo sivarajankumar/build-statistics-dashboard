@@ -37,8 +37,8 @@ module Mongoboard
 		field :type, type: String
 		field :version, type: String
 
-		embeds_many :steps
-		embeds_many :metrics
+		embeds_many :steps, as: :stepable
+		embeds_many :metrics, as: :metricable
 
 	end
 
@@ -49,14 +49,18 @@ module Mongoboard
 		field :status, type: String
 		field :types, type: Array
 
-		embeds_many :attachments
-		embeds_many :comments
+		embedded_in :stepable, polymorphic: false
+
+		embeds_many :attachments, as: :attachmentable
+		embeds_many :comments, as: :commentable
 	end
 
 	class Attachment
 		include Mongoid::Document
 		field :type, type: String
 
+		embedded_in :attachmentable, polymorphic: true
+		
 		protected
 
 		def initialize
@@ -97,6 +101,19 @@ module Mongoboard
 
 		field :author, type: String
 		field :text, type: String
+		field :created, type: DateTime, default: DateTime.now
+	
+		embedded_in :commentable, polymorphic: false
+
+		def initialized
+			@created = DateTime.now
+		end
+
+		def empty?
+			isAuthorEmpty = @author.nil? || @author.empty?  
+			isTextEmpty = @text.nil? || @text.empty?  
+			return isAuthorEmpty || isTextEmpty
+		end
 	end
 
 	class Metric
@@ -107,8 +124,8 @@ module Mongoboard
 
 		# value of this release
 		field :value, type: Float
-
-		embeds_many :MetricComparisonValues
+		
+		embedded_in :metricable, polymorphic: false
 
 	end
 

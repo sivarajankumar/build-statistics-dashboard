@@ -72,7 +72,7 @@ softwareRelasesControllers.controller('CommentsListCtrl', [ '$scope', '$routePar
 	$scope.processForm = function() {
 		CommentService.create($routeParams.releaseId, $routeParams.stepId, $scope.formData)
 			.success(function(result) {
-				$scope.step = result.step;
+				$scope.step = result;
 				Helpers.evalFormResultSuccess($scope);
 			}
 		);
@@ -138,23 +138,3 @@ softwareRelasesControllers.controller('SoftwareReleaseCreateCtrl', ['$scope', 'R
 
   }]);  
   
-softwareRelasesControllers.controller('SoftwareReleaseRateCtrl', ['$scope', '$routeParams', 'ReleaseService', 
-  function($scope, $routeParams, ReleaseService) {
-
-	$scope.formData = [];
-	ReleaseService.get($routeParams.releaseId).success(function(data) { $scope.release = data; });
-
-	$scope.processForm = function(form) {
-	ReleaseService.rate($routeParams.releaseId, form)
-		.success(function(result) {
-			$scope.release = result;
-			Helpers.evalFormResultSuccess(result, $scope);
-		});
-	};
-
-	$scope.updateFormData = function(metric,form) {
-		form[metric.id] = metric.value;
-	}
-  }]);
-
-
