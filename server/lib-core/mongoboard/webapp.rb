@@ -49,12 +49,12 @@ module Mongoboard
 		end
 
 		get '/releases/systems.json' do 
-			knownTypes = Release.distinct(:system)
+			knownTypes = Release.where(type: 'release_candidate').distinct(:system)
 			json knownTypes
 		end
 
 		get '/releases/names.json' do 
-			knownNames = Release.distinct(:name)
+			knownNames = Release.where(type: 'release_candidate').distinct(:name)
 			json knownNames
 		end
 
