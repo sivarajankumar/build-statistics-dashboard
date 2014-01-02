@@ -2,7 +2,7 @@
   
 	<a href="javascript:history.back()">Back</a>
 	
-    <div id="{{step.id}}">
+    <div id="{{step._id}}">
 		<h3>Comments for step '{{step.label}}'</h3>
 		
 		<div ng-repeat="comment in step.comments | orderBy: created" class="single-comment">			

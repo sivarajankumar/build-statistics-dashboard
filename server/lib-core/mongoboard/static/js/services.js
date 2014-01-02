@@ -11,8 +11,8 @@ var softwareRelasesServices = angular.module('softwareRelasesServices', ['ngReso
 softwareRelasesServices.factory('Mockdata', ['$http',
   function($http){
 	return  {
-		query: function(data) { $http.get('mockdata/' + data.filename + '.json'); },
-		get: function(data) { $http.get('mockdata/' + data.filename + '.json'); },
+		query: function(data) { return $http.get('mockdata/' + data.filename + '.json'); },
+		get: function(data) { return $http.get('mockdata/' + data.filename + '.json'); },
 	};
   }]);
 

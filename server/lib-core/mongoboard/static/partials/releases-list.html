@@ -36,12 +36,12 @@
 				</tr>
 			</thead>
 			<tbody>
-				<tr ng-class-odd="'odd'" ng-class-even="'even'" ng-repeat="release in releases | filter:query | orderBy:orderProp" class="release-listing" id="{{release.id}}">
+				<tr ng-class-odd="'odd'" ng-class-even="'even'" ng-repeat="release in releases | filter:query | orderBy:orderProp" class="release-listing" id="{{release._id}}">
 					<td>
-						<a class="glyphicon glyphicon-euro" title="Metrics" href="#/release/{{release.id}}/metrics"></a>
-						<a class="glyphicon glyphicon-list" title="Steps" href="#/release/{{release.id}}/steps"></a>
-						<a class="glyphicon glyphicon-remove" ng-click="removeRelease(release.id)" title="Delete release" href="#/releases/delete/{{release.id}}"></a>						
-						<a class="glyphicon glyphicon-certificate" title="Rate this build" href="#/release/{{release.id}}/rate"></a>
+						<a class="glyphicon glyphicon-euro" title="Metrics" href="#/release/{{release._id}}/metrics"></a>
+						<a class="glyphicon glyphicon-list" title="Steps" href="#/release/{{release._id}}/steps"></a>
+						<a class="glyphicon glyphicon-remove" ng-click="removeRelease(release._id)" title="Delete release" href="#/releases/delete/{{release._id}}"></a>						
+						<a class="glyphicon glyphicon-certificate" title="Rate this build" href="#/release/{{release._id}}/rate"></a>
 					</td>
 					<td>{{release.name}}</td>
 					<td>{{release.version}}</td>

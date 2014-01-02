@@ -2,13 +2,13 @@
 	"name": "Shop", 
 	"system": "Production -DE, AT, NL-", 
 	"created": "2013-12-24 15:02T+2", 
-	"id": "werfiowehr92830rh238923298", 
+	"_id": "werfiowehr92830rh238923298", 
 	"version": "123456",
 	"metrics": [
     {
         "label": "lines in changelog",
 		"types": [ "subversion-analysis", "important" ],
-        "id": "changelog",
+        "_id": "changelog",
         "value": 25,
 	"comparisonValues" : [
 		{ 
@@ -21,7 +21,7 @@
     {
         "label": "code volume",
 		"types": [ "subversion-analysis" ],
-        "id": "code-volume",
+        "_id": "code-volume",
         "value": 3000,
 	"comparisonValues" : [
 		{ 
@@ -34,7 +34,7 @@
     {
         "label": "number of active developers",
 		"types": [ "subversion-analysis" ],
-        "id": "num-developers",
+        "_id": "num-developers",
         "value": 6,
 	"comparisonValues" : [
 		{ 
@@ -46,7 +46,7 @@
     },
     {
         "label": "external interfaces involved",
-        "id": "num-external-interfaces",
+        "_id": "num-external-interfaces",
 		"types": [ "static-code-analysis" ],
         "value": 3,
 	"comparisonValues" : [
@@ -59,7 +59,7 @@
     },
     {
         "label": "code complexity",
-        "id": "code-complexity",
+        "_id": "code-complexity",
 		"types": [ "static-code-analysis", "important" ],
         "value": 200,
 	"comparisonValues" : [
@@ -72,7 +72,7 @@
     },
     {
         "label": "new created support requests",
-        "id": "new-support-requests",
+        "_id": "new-support-requests",
 		"types": [ "post-production-review" ],
         "value": 10,
 	"comparisonValues" : [
@@ -85,7 +85,7 @@
     },
     {
         "label": "server restarts",
-        "id": "server-restarts",
+        "_id": "server-restarts",
 		"types": [ "post-production-review", "important" ],
         "value": 1,
 	"comparisonValues" : [
@@ -98,7 +98,7 @@
     },
     {
         "label": "average requests per day",
-        "id": "average requests per day",
+        "_id": "average requests per day",
 		"types": [ "post-production-review" ],
         "value": 216548.1254,
 	"comparisonValues" : [
@@ -112,7 +112,7 @@
 	{
         "label": "load test: search and tracking",
 		"types": [ "load-tests", "important" ],
-        "id": "load-test-01",
+        "_id": "load-test-01",
         "value": 30,
 	"comparisonValues" : [
 		{ 
@@ -125,7 +125,7 @@
 	{
         "label": "load test: login and session handling",
 		"types": [ "load-tests" ],
-        "id": "load-test-02",
+        "_id": "load-test-02",
         "value": 5.2,
 	"comparisonValues" : [
 		{ 
@@ -138,7 +138,7 @@
 ],
 	"steps": [
     {
-        "id": "1_sdfopksdfpoksdfpoksdpof",
+        "_id": "1_sdfopksdfpoksdfpoksdpof",
         "label": "compile source code",
         "status": "executed",
         "attachments": [
@@ -164,7 +164,7 @@
     },
 	
 	    {
-        "id": "2_sdfopksdfpoksdfpoksdpof",
+        "_id": "2_sdfopksdfpoksdfpoksdpof",
         "label": "execute unit tests",
         "status": "passed",
         "attachments": [
@@ -186,7 +186,7 @@
     },
 	
 	    {
-        "id": "3_sdfopksdfpoksdfpoksdpof",
+        "_id": "3_sdfopksdfpoksdfpoksdpof",
         "label": "execute integration tests",
         "status": "failed",
         "attachments": [
@@ -212,7 +212,7 @@
     },
 	
 	    {
-        "id": "4_sdfopksdfpoksdfpoksdpof",
+        "_id": "4_sdfopksdfpoksdfpoksdpof",
         "label": "deploy on testsystem",
         "status": "passed",
         "attachments": [
@@ -238,7 +238,7 @@
     },
 	
 	    {
-        "id": "5_sdfopksdfpoksdfpoksdpof",
+        "_id": "5_sdfopksdfpoksdfpoksdpof",
         "label": "execute and review load tests",
         "status": "executed",
         "attachments": [
@@ -260,7 +260,7 @@
     },
 	
 	    {
-        "id": "6_sdfopksdfpoksdfpoksdpof",
+        "_id": "6_sdfopksdfpoksdfpoksdpof",
         "label": "deploy on production system",
         "status": "open",
         "attachments": [
@@ -286,7 +286,7 @@
     },
 	
 	   {
-        "id": "7_sdfopksdfpoksdfpoksdpof",
+        "_id": "7_sdfopksdfpoksdfpoksdpof",
         "label": "switch production systems",
         "status": "open",
         "attachments": [],

@@ -5,7 +5,7 @@
             "subversion-analysis",
             "important"
         ],
-        "id": "changelog",
+        "name": "changelog",
         "value": 25,
         "history": [
             {
@@ -51,7 +51,7 @@
         "types": [
             "subversion-analysis"
         ],
-        "id": "code-volume",
+        "name": "code-volume",
         "value": 3000,
         "history": [
             {
@@ -97,7 +97,7 @@
         "types": [
             "subversion-analysis"
         ],
-        "id": "num-developers",
+        "name": "num-developers",
         "value": 6,
         "history": [
             {
@@ -140,7 +140,7 @@
     },
     {
         "label": "external interfaces involved",
-        "id": "num-external-interfaces",
+        "name": "num-external-interfaces",
         "types": [
             "static-code-analysis"
         ],
@@ -186,7 +186,7 @@
     },
     {
         "label": "code complexity",
-        "id": "code-complexity",
+        "name": "code-complexity",
         "types": [
             "static-code-analysis",
             "important"
@@ -233,7 +233,7 @@
     },
     {
         "label": "new created support requests",
-        "id": "new-support-requests",
+        "name": "new-support-requests",
         "types": [
             "post-production-review"
         ],
@@ -279,7 +279,7 @@
     },
     {
         "label": "server restarts",
-        "id": "server-restarts",
+        "name": "server-restarts",
         "types": [
             "post-production-review",
             "important"
@@ -326,7 +326,7 @@
     },
     {
         "label": "average requests per day",
-        "id": "average requests per day",
+        "name": "average requests per day",
         "types": [
             "post-production-review"
         ],
@@ -376,7 +376,7 @@
             "load-tests",
             "important"
         ],
-        "id": "load-test-01",
+        "name": "load-test-01",
         "value": 30,
         "history": [
             {
@@ -422,7 +422,7 @@
         "types": [
             "load-tests"
         ],
-        "id": "load-test-02",
+        "name": "load-test-02",
         "value": 5.2,
         "history": [
             {
