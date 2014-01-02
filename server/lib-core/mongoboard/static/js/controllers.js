@@ -17,7 +17,7 @@ softwareRelasesControllers.controller('SoftwareReleaseListCtrl', ['$scope', 'Rel
 
 softwareRelasesControllers.controller('ReleaseStepsListCtrl', ['$scope', '$routeParams', 'ReleaseService', 'ReleaseStepService',
   function($scope, $routeParams, ReleaseService, ReleaseStepService) {
-	$scope.release = ReleaseService.get($routeParams.releaseId);
+	ReleaseService.get($routeParams.releaseId).success(function(data) { $scope.release = data; });
 	
 	$scope.removeStep = function(stepId) {
 		ReleaseStepService.delete(stepId);
@@ -60,24 +60,28 @@ softwareRelasesControllers.controller('ReleaseStepsListCtrl', ['$scope', '$route
 
 softwareRelasesControllers.controller('CommentsListCtrl', [ '$scope', '$routeParams', 'CommentService', 
   function($scope, $routeParams, CommentService) {
-	$scope.step = CommentService.query($routeParams.stepId);
+	CommentService.query($routeParams.stepId).success(function(data) { $scope.step = data });
+
 	$scope.formData = {};
 	$scope.processForm = function() {
-		var result = CommentService.create($routeParams.stepId, $scope.formData);
-
-		$scope.step = result.step;
-		Helpers.evalFormResult(result, $scope);
+		CommentService.create($routeParams.stepId, $scope.formData).success(
+			function(result) {
+				$scope.step = result.step;
+				Helpers.evalFormResult(result, $scope);
+			}
+		);
 	};
   }]);
   
 softwareRelasesControllers.controller('ReleaseMetricsListCtrl', ['$scope', '$routeParams', 'ReleaseService', 'MetricService',
   function($scope, $routeParams, ReleaseService, MetricService) {
-	$scope.release = ReleaseService.get($routeParams.releaseId);
-	$scope.metrics = MetricService.queryHistory($routeParams.releaseId);
+
+	ReleaseService.get($routeParams.releaseId).success(function(data) { $scope.release = data; });
+	MetricService.queryHistory($routeParams.releaseId).success(function(data) { $scope.metrics = data; });
+
 	$scope.updateMetric = function(metric) {
 
 		var inputField = $('#metric_value_' + metric.id);
-
 		
 		var value = parseFloat(metric.value);
 		if(isNaN(value)) {
@@ -86,22 +90,24 @@ softwareRelasesControllers.controller('ReleaseMetricsListCtrl', ['$scope', '$rou
 			return;
 		}
 
-		var result = MetricService.saveValue({ 
+		MetricService.saveValue({ 
 			releaseId: $routeParams.releaseId, 
 			metric: { 
 				id: metric.id,
 				value: metric.value
 			}
-		});
+		}).success(function(result) {
+		
+			if (result.success) {
+				inputField.removeClass('error');
+				inputField.addClass('info');
+			}
+			else {
+				inputField.removeClass('info');
+				inputField.addClass('error');
+			}
 
-		if (result.success) {
-			inputField.removeClass('error');
-			inputField.addClass('info');
-		}
-		else {
-			inputField.removeClass('info');
-			inputField.addClass('error');
-		}
+		});
 
 		
 	};
@@ -127,17 +133,15 @@ softwareRelasesControllers.controller('SoftwareReleaseRateCtrl', ['$scope', '$ro
   function($scope, $routeParams, ReleaseService) {
 
 	$scope.formData = [];
-	$scope.release = ReleaseService.get($routeParams.releaseId);
+	ReleaseService.get($routeParams.releaseId).success(function(data) { $scope.release = data; });
 
 	$scope.processForm = function(form) {
-		var result = ReleaseService.rate(
-			$routeParams.releaseId, 
-			form);
-		$scope.release = result.release;
-
-		Helpers.evalFormResult(result, $scope);
+	ReleaseService.rate($routeParams.releaseId, form)
+		.success(function(result) {
+			$scope.release = result.release;
+			Helpers.evalFormResult(result, $scope);
+		});
 	};
-
 
 	$scope.updateFormData = function(metric,form) {
 		form[metric.id] = metric.value;

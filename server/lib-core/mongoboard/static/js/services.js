@@ -8,11 +8,12 @@ function toUrl(path) {
 var softwareRelasesServices = angular.module('softwareRelasesServices', ['ngResource']);
 
 
-softwareRelasesServices.factory('Mockdata', ['$resource',
-  function($resource){
-    return $resource('mockdata/:filename.json', {}, {
-      query: {method:'GET', params: { filename: 'releases-list' }, isArray:true}
-    });
+softwareRelasesServices.factory('Mockdata', ['$http',
+  function($http){
+	return  {
+		query: function(data) { $http.get('mockdata/' + data.filename + '.json'); },
+		get: function(data) { $http.get('mockdata/' + data.filename + '.json'); },
+	};
   }]);
 
 softwareRelasesServices.factory('ReleaseStepService', [ 'Mockdata', function(Mockdata) {
