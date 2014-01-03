@@ -72,7 +72,7 @@ module Mongoboard
 			status = params['status']
 
 			begin
-				step = findStep(releaseId, stepId)
+				step = StepService.instance.find(releaseId, stepId)
 				step.status = status if status != nil
 
 				step.save
@@ -86,7 +86,7 @@ module Mongoboard
 
 		delete '/release/:releaseId/step/:stepId.json' do |releaseId, stepId|
 			begin
-				step = findStep(releaseId, stepId)
+				step = StepService.instance.find(releaseId, stepId)
 				step.delete()
 			rescue Mongoid::Errors::DocumentNotFound
 				status 404
@@ -95,7 +95,7 @@ module Mongoboard
 
 		get '/release/:releaseId/step/:stepId.json' do |releaseId, stepId|
 			begin
-				step = findStep(releaseId, stepId)
+				step = StepService.instance.find(releaseId, stepId)
 			rescue Mongoid::Errors::DocumentNotFound
 				status 404
 			else
@@ -113,7 +113,7 @@ module Mongoboard
 			comment.text = text
 
 			begin
-				step = findStep(releaseId, stepId)
+				step = StepService.instance.find(releaseId, stepId)
 
 				step.comments.push comment
 				step.save!
@@ -131,7 +131,7 @@ module Mongoboard
 			attachment.href = params['label']
 
 			begin
-				step = findStep(releaseId, stepId)
+				step = StepService.instance.find(releaseId, stepId)
 
 				step.attachments.push comment
 				step.save!
@@ -154,7 +154,7 @@ module Mongoboard
 			attachment.href = link
 
 			begin
-				step = findStep(releaseId, stepId)
+				step = StepService.instance.find(releaseId, stepId)
 
 				step.attachments.push comment
 				step.save!
@@ -167,12 +167,46 @@ module Mongoboard
 
 		end
 
+		post '/find-or-create/release-:software/version-:version/metric-:metricName.json' do |software, version, metricName|
+
+			service = MetricService.instance
+			begin
+				metric = service.findOrCreateMetric(software, version, metricName)
+			rescue Errors::WrongResultCount => e
+				status 404, e.message
+			else
+				updateMetric(params)
+				json metric
+			end
+			
+		end
+
 		private
 
-		def findStep(releaseId, stepId)
-			release = Release.find(releaseId)
-			step = release.steps.find(stepId)
-			step
+		def updateMetric(params)
+
+			value = params['value']
+			label = params['label']
+			types = params['types']
+			
+			metric.value = value.to_f if not value.nil?
+			metric.label = label.to_s if not label.nil?
+			metric.types = toStringArray(types) if not types.nil?
+			metric.save!
+			metric
 		end
+
+		def toStringArray(parameter)
+			result = []
+			if parameter.kind_of?(Array)
+				parameter.each do |item|
+					result.push item.to_s
+				end
+			else
+				result.push parameter.to_s
+			end
+			result
+		end
+
 	end
 end

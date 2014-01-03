@@ -1,7 +1,87 @@
 
 require 'mongoid'
+require 'singleton'
 
 module Mongoboard
+
+	module Errors
+		class WrongResultCount < StandardError
+			def initialize(actualCount)
+				@actualCount = actualCount
+			end
+
+			def message
+				message = super
+				r = "got " + @actualCount.to_s + " results"
+				r = r + ", " + message unless message.nil?
+				r
+			end
+		end
+	end
+
+	class MetricService
+		include Singleton
+
+		#
+		# either returns an existing metric or create a new record for 
+		# this release and returns it
+		#
+		# @throws a WrongResultCount errors, if release cannot be found or more
+		# metrics with given name exists
+		#
+		def findOrCreateMetric(software, version, metricName)
+			queryRelease = Release.where({
+				name: software, 
+				type: 'release_candidate',
+				version: version
+			})
+
+			count = queryRelease.count
+			if count != 1
+				raise Errors::WrongResultCount.new(count), "1 release expected"
+			else
+				release = queryRelease[0]
+				queryMetric = release.metrics.where({
+					name: metricName
+				})
+
+				count = queryMetric.count
+
+				if count > 1
+					raise Errors::WrongResultCount.new(count), "0..1 metrics expected"
+				else 
+					if count == 1
+						metric = queryMetric[0]
+					end
+
+					if count == 0
+						metric = Metric.new
+						metric.name = metricName
+						release.metrics.push metric
+						release.save!
+					end
+
+				end
+			end
+
+			raise "Unexpected result: metric == nil" if metric.nil?
+			metric
+
+
+		end
+
+	end
+
+	class StepService
+
+		include Singleton
+
+		def find(releaseId, stepId)
+			release = Release.find(releaseId)
+			step = release.steps.find(stepId)
+			step
+		end
+	end
 
 	#
 	# create a release based on a template and attach required steps
@@ -120,6 +200,7 @@ module Mongoboard
 		include Mongoid::Document
 
 		field :label, type: String
+		field :name, type: String
 		field :types, type: Array
 
 		# value of this release
