@@ -49,27 +49,25 @@ describe Mongoboard::MetricService do
 
 		release = findRelease 'sample-1', 1
 
-		metric = saveNewMetric release, 'foo'
+		metric = saveNewMetric release, 'foo-bar'
 		metric.value = 3.2
+		metric.label = 'Other'
 		metric.save!
 
 		service = Mongoboard::MetricService.instance
-		metric = service.findOrCreateMetric('sample-1', '1', 'foo')
+		metric = service.findOrCreateMetric('sample-1', '1', 'foo-bar')
 
-		metricFromDb = findRelease('sample-1',1).metrics.last
-		metricFromDb.name.should eq 'foo'
-
-		metric.name.should eq 'foo'
-		metric.label.should eq nil
+		metric.types[0].should eq 'foo-bar'
+		metric.label.should eq 'Other'
 		metric.value.should eq 3.2
 	end
 
 	it "creates a new metric for a unique release" do
 
 		service = Mongoboard::MetricService.instance
-		metric = service.findOrCreateMetric('sample-1', '1', 'foo')
-		metric.name.should eq 'foo'
-		metric.label.should eq nil
+		metric = service.findOrCreateMetric('sample-1', '1', 'foo-bar')
+		metric.types[0].should eq 'foo-bar'
+		metric.label.should eq 'Foo bar'
 		metric.value.should eq nil
 
 	end

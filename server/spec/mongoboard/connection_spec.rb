@@ -12,6 +12,54 @@ describe Mongoboard::Release do
 		Mongoid.purge!
 	end
 
+	it "can save metrics and find them by type" do
+
+		createReleaseFactoryConfiguration
+
+		id=Array.new
+
+		factory = Mongoboard::ReleaseFactory.new
+		object = factory.create 'sample-1', '1'
+		object.save!
+		id.push object._id
+
+		factory = Mongoboard::ReleaseFactory.new
+		object = factory.create 'sample-1', '2'
+		object.save!
+		id.push object._id
+
+		metric = Mongoboard::Metric.new
+		metric.label = 'Foo'
+		metric.value = 1
+		metric.types = [ 'foo', 'important']
+		metric.release = id[0]
+		metric.save!
+
+		metric = Mongoboard::Metric.new
+		metric.label = 'Foo2'
+		metric.value = 1
+		metric.types = [ 'foo2', 'important']
+		metric.release = id[0]
+		metric.save!
+		
+		metric = Mongoboard::Metric.new
+		metric.label = 'Foo'
+		metric.value = 1
+		metric.types = [ 'foo' ]
+		metric.release = id[1]
+		metric.save!
+
+		query = Mongoboard::Metric.where(:release => id[0], :types.all => [ 'foo' ])
+		query.count.should eq 1
+		query[0].types[0].should eq 'foo'
+		
+		query = Mongoboard::Metric.where(:types.all => [ 'foo' ])
+		query.count.should eq 2
+		query[0].types[0].should eq 'foo'
+		query[1].types[0].should eq 'foo'
+
+	end
+
 	it "can find a step by id" do
 
 		Mongoboard::Release.count.should eq 0

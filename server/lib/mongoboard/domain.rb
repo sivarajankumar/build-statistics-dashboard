@@ -41,10 +41,7 @@ module Mongoboard
 				raise Errors::WrongResultCount.new(count), "1 release expected"
 			else
 				release = queryRelease[0]
-				queryMetric = release.metrics.where({
-					name: metricName
-				})
-
+				queryMetric = Mongoboard::Metric.where(:release => release._id, :types.all => [ metricName ])
 				count = queryMetric.count
 
 				if count > 1
@@ -56,9 +53,11 @@ module Mongoboard
 
 					if count == 0
 						metric = Metric.new
-						metric.name = metricName
-						release.metrics.push metric
-						release.save!
+						metric.label = metricName.capitalize.sub /[-_]/, ' '
+						metric.types = Array.new
+						metric.types.push metricName
+						metric.release = release._id
+						metric.save!
 					end
 
 				end
@@ -66,7 +65,6 @@ module Mongoboard
 
 			raise "Unexpected result: metric == nil" if metric.nil?
 			metric
-
 
 		end
 
@@ -118,7 +116,6 @@ module Mongoboard
 		field :version, type: String
 
 		embeds_many :steps, as: :stepable
-		embeds_many :metrics, as: :metricable
 
 	end
 
@@ -200,14 +197,11 @@ module Mongoboard
 		include Mongoid::Document
 
 		field :label, type: String
-		field :name, type: String
 		field :types, type: Array
+		field :release, type: Moped::BSON::ObjectId
 
 		# value of this release
 		field :value, type: Float
-		
-		embedded_in :metricable, polymorphic: false
-
 	end
 
 	#

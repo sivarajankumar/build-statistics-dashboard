@@ -37,9 +37,11 @@ module Mongoboard
 
 			def saveNewMetric(release, metricName)
 				metric = Mongoboard::Metric.new
-				metric.name = metricName
-				release.metrics.push metric
-				release.save!
+				metric.label = metricName.capitalize.sub /[-_]/, ' '
+				metric.types = Array.new
+				metric.types.push metricName
+				metric.release = release._id
+				metric.save!
 				metric
 			end
 

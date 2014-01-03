@@ -84,6 +84,45 @@ def createTemplates
 	template.save
 end
 
+def createMetrics(release, offset)
+
+	createAndSaveMetric release, 'changelog', 20, offset
+	createAndSaveMetric release, 'code-size', 20000, offset
+	createAndSaveMetric release, 'code-complexity', 30, offset
+	createAndSaveMetric release, [ 'reported-defects', 'important' ], 10, offset
+	createAndSaveMetric release, 'time-before-last-commit', 3, offset
+
+end
+
+def createAndSaveMetric(release, types, value, offset)
+	offset = 0 if offset.nil?
+
+	name = nil
+	label = nil
+	if types.kind_of? Array
+		name = types
+		label = types[0].to_s.capitalize.sub /[-_]/, ' '
+	else
+		name = [ types.to_s ]
+		label = types.to_s.capitalize.sub /[-_]/, ' '
+	end
+
+	metric = Mongoboard::Metric.new
+	metric.types = name
+	metric.label = label
+
+	metric.value = value + (offset * 1000) if value > 1000
+	metric.value = value + (offset * 100) if value > 100 and value <= 1000 
+	metric.value = value + (offset * 20) if value > 50  and value <= 100 
+	metric.value = value + (offset * 4) if value > 20  and value <= 50 
+	metric.value = value + offset if value <= 20 
+
+	metric.release = release._id
+
+	metric.save!
+	metric
+end
+
 options = createOptionsOrUsage
 
 if options[:create_mockdata]
@@ -97,22 +136,27 @@ if options[:create_mockdata]
 	release = factory.create('Shop', '2013-023')
 	release.system = 'Eastern Europe Production'
 	release.save
+	createMetrics(release, 2)
 
 	release = factory.create('Shop', '2013-023')
 	release.system = 'Western Europe Production'
 	release.save
+	createMetrics(release, 3)
 
 	release = factory.create('Shop', '2013-024')
 	release.system = 'Eastern Europe Production'
 	release.save
+	createMetrics(release, 0)
 
 	release = factory.create('Shop', '2013-024')
 	release.system = 'Western Europe Production'
 	release.save
+	createMetrics(release, 5)
 
 	release = factory.create('Shop', '2013-025')
 	release.system = 'Eastern Europe Production'
 	release.save
+	createMetrics(release, 1)
 
 	release = factory.create('Shop', '2013-025')
 	release.system = 'Western Europe Production'
