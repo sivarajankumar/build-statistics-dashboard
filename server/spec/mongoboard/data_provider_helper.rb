@@ -19,6 +19,7 @@ module Mongoboard
 
 				saveNewRelease 'sample-1', 1
 				saveNewRelease 'sample-1', 2
+				saveNewRelease 'sample-1', 3
 				saveNewRelease 'sample-2', 1
 				saveNewRelease 'sample-2', 2
 			end
@@ -35,12 +36,13 @@ module Mongoboard
 				@releases[name.to_s + ' ' + version.to_s] = object._id
 			end
 
-			def saveNewMetric(release, metricName)
+			def saveNewMetric(release, metricName, value = nil)
 				metric = Mongoboard::Metric.new
 				metric.label = metricName.capitalize.sub /[-_]/, ' '
 				metric.types = Array.new
 				metric.types.push metricName
 				metric.release = release._id
+				metric.value = value
 				metric.save!
 				metric
 			end

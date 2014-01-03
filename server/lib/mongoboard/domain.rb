@@ -23,14 +23,13 @@ module Mongoboard
 		include Singleton
 
 		def findMetricHistory(releaseId)
-			history = MetricHistory.new
-			
 			release = Release.find(releaseId)
-			history.release = release
+			history = MetricHistory.new release
 
 			query = Metric.where(:release => release._id).each do |metric|
-				mwh = MetricWithHistory.new
-				mwh.latest = metric
+				mwh = MetricWithHistory.new metric
+
+				# buggy will include other applications as well !!
 				queryHistory = Metric.where(:types.all => [ metric.types[0] ])
 				queryHistory.each do |entry|
 					mwh.values.push entry.value
