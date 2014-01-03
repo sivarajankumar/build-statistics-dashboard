@@ -30,6 +30,16 @@ describe Mongoboard::StepService do
 		
 	end
 
+	it "find step by name" do
+		release = findRelease 'sample-1', 2
+		step = release.steps[1]
+		stepId = step._id
+		
+		label = step.label
+		step = Mongoboard::StepService.instance.findUniqByName 'sample-1', '2', label
+		step._id.should eq stepId
+	end
+
 	it "find step by id" do
 
 		release = findRelease 'sample-1', 2

@@ -23,16 +23,16 @@
 	<div class="clearfix"></div>
 	
 	<div class="row-fluid">
-		<div ng-repeat="metric in metrics | filter:query | orderBy:orderProp" class="release-metric pull-left" id="{{metric.name}}">
-			<div class="{{metric.types.join(' ')}}">
+		<div ng-repeat="history in metrics | filter:query | orderBy:orderProp" class="release-metric pull-left" id="{{metric.name}}">
+			<div class="{{history.latest.types.join(' ')}}">
 				<div class="metric-header">
-					<strong>{{metric.label}}</strong>
+					<strong>{{history.latest.label}}</strong>
 					
 				</div>
 				
 				<div class="metric-data widget">
-					<render-metric type="auto" metric="metric">
-						{{metric.value}} ({{metric.min}}&lt;{{metric.avg}}&lt;{{metric.max}})
+					<render-metric type="auto" values="history.values" metric="history.latest">
+						Graph not rendered yet.
 					</render-metric>
 				</div>		
 
@@ -40,10 +40,10 @@
 					<div>
 						Value:
 						<input class="metric-value" type="number" 
-							ng-keypress-enter="updateMetric(metric)"
-							ng-model="metric.value" id="metric_value_{{metric.name}}">
+							ng-keypress-enter="updateMetric(history.latest)"
+							ng-model="history.latest.value" id="metric_value_{{history.latest._id}}">
 					</div>
-					<div class="tags">Tags: {{metric.types.join(', ')}}</div>
+					<div class="tags">Tags: {{history.latest.types.join(', ')}}</div>
 				</div>				
 			</div>
 		</div>

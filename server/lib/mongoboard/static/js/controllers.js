@@ -82,12 +82,14 @@ softwareRelasesControllers.controller('CommentsListCtrl', [ '$scope', '$routePar
 softwareRelasesControllers.controller('ReleaseMetricsListCtrl', ['$scope', '$routeParams', 'ReleaseService', 'MetricService',
   function($scope, $routeParams, ReleaseService, MetricService) {
 
-	ReleaseService.get($routeParams.releaseId).success(function(data) { $scope.release = data; });
-	MetricService.queryHistory($routeParams.releaseId).success(function(data) { $scope.metrics = data; });
+	MetricService.queryHistory($routeParams.releaseId).success(function(data) { 
+		$scope.release = data.release; 
+		$scope.metrics = data.metrics; 
+	});
 
 	$scope.updateMetric = function(metric) {
 
-		var inputField = $('#metric_value_' + metric.id);
+		var inputField = $('#metric_value_' + metric._id);
 		
 		var value = parseFloat(metric.value);
 		if(isNaN(value)) {
@@ -96,23 +98,13 @@ softwareRelasesControllers.controller('ReleaseMetricsListCtrl', ['$scope', '$rou
 			return;
 		}
 
-		MetricService.saveValue({ 
-			releaseId: $routeParams.releaseId, 
-			metric: { 
-				id: metric.id,
-				value: metric.value
-			}
-		}).success(function(result) {
-		
-			if (result.success) {
-				inputField.removeClass('error');
-				inputField.addClass('info');
-			}
-			else {
-				inputField.removeClass('info');
-				inputField.addClass('error');
-			}
-
+		MetricService.saveValue(metric._id, metric.value).then(function(r) {
+			inputField.removeClass('error');
+			inputField.addClass('info');
+			inputField.val(r.data.value);
+		}, function() {
+			inputField.removeClass('info');
+			inputField.addClass('error');
 		});
 
 		

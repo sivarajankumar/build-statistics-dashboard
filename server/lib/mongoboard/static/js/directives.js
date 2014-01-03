@@ -37,8 +37,7 @@ softwareRelasesDirectives.directive('renderMetric', function() {
 		}		
 	}
 
-	function createWidgetData(metric) {
-		var history = metric.history;
+	function createWidgetData(metric, history) {
 		var data = [];
 		var record;
 		var i = 0;
@@ -129,19 +128,16 @@ softwareRelasesDirectives.directive('renderMetric', function() {
 		return def;
 	}
 
-	function findHistory(id, data) {
-
-	}
-
 	function link(scope, element, attr) {
 	
 		var metric = scope.metric;
+		var values = scope.values;
 		
 		if(attr.type == 'auto' || type.attr === undefined) {
 			attr.type = 'xy-chart';
 		}
 
-		var data = createWidgetData(metric);
+		var data = createWidgetData(metric, values);
 		var def = undefined;
 
 		if(attr.type == 'pie-chart') {
@@ -165,7 +161,8 @@ softwareRelasesDirectives.directive('renderMetric', function() {
 		restrict: 'E',
 		link: link,
 		scope: {
-			metric: "=metric"
+			metric: "=metric",
+			values: "=values"
 		}
 	};	
 	return r;

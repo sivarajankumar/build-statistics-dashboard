@@ -2,7 +2,7 @@
 
 
 function toUrl(path) {
-	return '/'+path;
+	return '/' + path;
 }
 
 var softwareRelasesServices = angular.module('softwareRelasesServices', ['ngResource']);
@@ -109,28 +109,21 @@ function($http) {
 	return service;
 }]);
 
-softwareRelasesServices.factory('MetricService', [ 'Mockdata', function(Mockdata) {
+softwareRelasesServices.factory('MetricService', [ '$http', function($http) {
 	var service = {
 		queryHistory: function(releaseId) {
-			return Mockdata.query({ filename: 'metrics-list' });	
+			var url= toUrl('release/' + releaseId + '/metrics-default-history.json');
+			return $http.get(url);
 		},
 
-		saveValue: function(data) {
-			var releaseId = data.releaseId;
-			var metricId = data.metric.id;
-			var metricValue = data.metric.value; // make it a number
+		remove: function(metricId) {
+			return $http.delete(toUrl('metric/' + metricId + '.json'));
+		},
 
-			var result = {
-				success: true,
-				value: metricValue
-			};
-			
-			// Mockdata to show color changes on gui
-			if (metricValue <= 0) {
-				result.success = false;
-			}
-
-			return result;
+		saveValue: function(metricId, value) {
+			return $http.post(
+				toUrl('metric/' + metricId + '.json?value=' 
+				+ value));
 		}
 	};
 	return service;

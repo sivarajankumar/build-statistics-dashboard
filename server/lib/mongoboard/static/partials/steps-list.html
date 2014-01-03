@@ -9,7 +9,15 @@
 		<div class="step-data status-{{step.status}}">
 			<span>Attachments:</span>
 			<ul class="specs" >
-				<li ng-repeat="attachment in step.attachments"><a target="_blank" href="{{attachment.link}}">{{attachment.label}}</a></li>				
+				<li ng-repeat="attachment in step.attachments" 
+					>
+					<span ng-if="attachment.type = 'href'" class="attachment-type-{{attachment.type}}">
+						<a target="_blank" href="{{attachment.href}}">{{attachment.label}}</a>
+					</span>
+					<span ng-if="attachment.type = 'label'" class="attachment-type-{{attachment.type}}">
+						{{attachment.label}}
+					</span>
+				</li>				
 			</ul>			
 		</div>
 		

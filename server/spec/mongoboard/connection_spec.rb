@@ -1,11 +1,14 @@
 
 require 'mongoboard/domain'
+require 'mongoboard/data_provider_helper'
+
 require 'pry'
 
 describe Mongoboard::Release do
 
+	include Mongoboard::Spec::Testdata
 	before :all do
-		Mongoid.load!('../etc/mongoid.yml', :development)
+		configureMongoDb
 	end
 
 	before :each do
@@ -158,6 +161,38 @@ describe Mongoboard::Release do
 		#step2.id.should_not eq step.id
 	end
 
+	it "can save href attachments" do
+		initEmptyDefaults
+		object = findRelease 'sample-1', 1
+		step = object.steps[0]
+
+		attachment = Mongoboard::HrefAttachment.new
+		#binding.pry
+		attachment.label = 'fooo'
+		attachment.href = 'http://www.google.de'
+		step.attachments.push attachment
+		step.save!
+
+		object = findRelease 'sample-1', 1
+		object.steps[0].attachments.length.should eq 1
+		object.steps[0].attachments[0].label.should eq 'fooo'
+		object.steps[0].attachments[0].href.should eq 'http://www.google.de'
+	end
+
+	it "can save label attachments" do
+		initEmptyDefaults
+		object = findRelease 'sample-1', 1
+		step = object.steps[0]
+
+		attachment = Mongoboard::LabelAttachment.new
+		attachment.label = 'fooo'
+		step.attachments.push attachment
+		step.save!
+
+		object = findRelease 'sample-1', 1
+		object.steps[0].attachments.length.should eq 1
+		object.steps[0].attachments[0].label.should eq 'fooo'
+	end
 	def createReleaseFactoryConfiguration
 		template = Mongoboard::Release.new
 		template.type = 'template'

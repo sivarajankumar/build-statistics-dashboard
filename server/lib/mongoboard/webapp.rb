@@ -1,4 +1,3 @@
-
 require 'moped'
 require 'sinatra/base'
 require 'sinatra/respond_with'
@@ -125,16 +124,15 @@ module Mongoboard
 			end
 		end
 
-		post '/release/:releaseId/step/:stepId/attachment/label.json' do |releaseId, stepId|
+		post '/create/release-:software/version-:version/step-:stepLabel/attachments/label.json' do |software, version, stepLabel|
 
 			attachment = LabelAttachment.new
-			attachment.href = params['label']
+			attachment.label = params['label']
+			attachment.type = 'label'
 
 			begin
-				step = StepService.instance.find(releaseId, stepId)
-
-				step.attachments.push comment
-				step.save!
+				step = StepService.instance.findUniqByName software, version, stepLabel
+				saveAttachment step, attachment, request.ip
 
 			rescue Mongoid::Errors::DocumentNotFound
 				status 404
@@ -144,20 +142,21 @@ module Mongoboard
 
 		end
 
-		post '/release/:releaseId/step/:stepId/attachment/href.json' do |releaseId, stepId|
+		post '/create/release-:software/version-:version/step-:stepLabel/attachments/href.json' do |software, version, stepLabel|
 
 			mimeType = params['mime-type']
 			link = params['link']
+			label = params['label']
 
 			attachment = HrefAttachment.new
 			attachment.mimeType = mimeType if not mimeType.nil?
+			attachment.label = label
 			attachment.href = link
+			attachment.type = 'href'
 
 			begin
-				step = StepService.instance.find(releaseId, stepId)
-
-				step.attachments.push comment
-				step.save!
+				step = StepService.instance.findUniqByName software, version, stepLabel
+				saveAttachment step, attachment, request.ip
 
 			rescue Mongoid::Errors::DocumentNotFound
 				status 404
@@ -167,11 +166,43 @@ module Mongoboard
 
 		end
 
-		get '/release/:releaseId/metrics-history.json' do |releaseId|
+		get '/metric/:metricId.json' do |metricId|
+			begin
+				metric = Metric.find(metricId)
+			rescue Mongoid::Errors::DocumentNotFound
+				status 404
+			else
+				json metric
+			end
+		end
+
+		delete '/metric/:metricId.json' do |metricId|
+			begin
+				metric = Metric.find(metricId)
+				metric.delete
+			rescue Mongoid::Errors::DocumentNotFound
+				status 404
+			else
+				json metric
+			end
+		end
+
+		post '/metric/:metricId.json' do |metricId|
+			begin
+				metric = Metric.find(metricId)
+				updateMetric(metric, params)
+			rescue Mongoid::Errors::DocumentNotFound
+				status 404
+			else
+				json metric
+			end
+		end
+
+		get '/release/:releaseId/metrics-default-history.json' do |releaseId|
 
 			service = MetricService.instance
 			begin
-				history = service.findMetricHistory(releaseId)
+				history = service.findMetricHistory(releaseId, 50)
 			rescue Mongoid::Errors::DocumentNotFound
 				status 404
 			else
@@ -180,7 +211,10 @@ module Mongoboard
 
 		end
 
-		post '/find-or-create/release-:software/version-:version/metric-:metricName.json' do |software, version, metricName|
+		#
+		# metricName - first type in record is name of a metric
+		#
+		post '/create-or-replace/release-:software/version-:version/metric-:metricName.json' do |software, version, metricName|
 
 			service = MetricService.instance
 			begin
@@ -188,7 +222,7 @@ module Mongoboard
 			rescue Errors::WrongResultCount => e
 				status 404, e.message
 			else
-				updateMetric(params)
+				updateMetric(metric, params)
 				json metric
 			end
 			
@@ -196,7 +230,7 @@ module Mongoboard
 
 		private
 
-		def updateMetric(params)
+		def updateMetric(metric, params)
 
 			value = params['value']
 			label = params['label']
@@ -221,6 +255,17 @@ module Mongoboard
 			result
 		end
 
+		def saveAttachment step, attachment, clientIp
+
+			step.attachments.push attachment
+
+			comment = Comment.new
+			comment.author = "System " + clientIp
+			comment.text = "Created attachment " + attachment.label.to_s
+			step.comments.push comment
+
+			step.save!
+		end
 
 	end
 end

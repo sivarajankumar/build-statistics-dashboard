@@ -37,8 +37,7 @@ describe Mongoboard::MetricService do
 		saveNewMetric release, 'value', 1
 		
 		service = Mongoboard::MetricService.instance
-		history = service.findMetricHistory(release._id)
-		binding.pry
+		history = service.findMetricHistory(release._id, 30)
 	end
 	
 	it "raises an error if metric is not uniq" do
