@@ -167,6 +167,19 @@ module Mongoboard
 
 		end
 
+		get '/release/:releaseId/metrics-history.json' do |releaseId|
+
+			service = MetricService.instance
+			begin
+				history = service.findMetricHistory(releaseId)
+			rescue Mongoid::Errors::DocumentNotFound
+				status 404
+			else
+				json history
+			end
+
+		end
+
 		post '/find-or-create/release-:software/version-:version/metric-:metricName.json' do |software, version, metricName|
 
 			service = MetricService.instance
@@ -207,6 +220,7 @@ module Mongoboard
 			end
 			result
 		end
+
 
 	end
 end

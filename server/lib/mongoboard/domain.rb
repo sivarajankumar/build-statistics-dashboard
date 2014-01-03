@@ -22,6 +22,27 @@ module Mongoboard
 	class MetricService
 		include Singleton
 
+		def findMetricHistory(releaseId)
+			history = MetricHistory.new
+			
+			release = Release.find(releaseId)
+			history.release = release
+
+			query = Metric.where(:release => release._id).each do |metric|
+				mwh = MetricWithHistory.new
+				mwh.latest = metric
+				queryHistory = Metric.where(:types.all => [ metric.types[0] ])
+				queryHistory.each do |entry|
+					mwh.values.push entry.value
+				end
+
+				mwh.values.push metric.value
+				history.metrics.push mwh
+			end
+
+			history
+		end
+
 		#
 		# either returns an existing metric or create a new record for 
 		# this release and returns it
@@ -199,23 +220,35 @@ module Mongoboard
 		field :label, type: String
 		field :types, type: Array
 		field :release, type: Moped::BSON::ObjectId
+		field :created, type: DateTime
 
 		# value of this release
 		field :value, type: Float
+
+		def initialized
+			@created = DateTime.now
+		end
+
 	end
 
-	#
-	# this class is e.g.
-	#  - an average value of last 5 releases
-	#  - an average value of last 3 month
-	#  - ...
-	#
-	class MetricComparisionValue
-		include Mongoid::Document
+	class MetricHistory
 
-		field :label, type: String
-		field :type, type: String
-		field :value, type: Float
+		attr_reader :release
+		attr_reader :metrics
 
+		def initialize(release)
+			@release = release
+			@metrics = Array.new
+		end
+	end
+
+	class MetricWithHistory
+		attr_reader :latest
+		attr_reader :values
+		
+		def initialize(metric)
+			@values = Array.new
+			@latest = metric
+		end
 	end
 end
