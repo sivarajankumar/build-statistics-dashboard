@@ -1,4 +1,0 @@
-require 'pages'
-
-Deployments.run!
-
