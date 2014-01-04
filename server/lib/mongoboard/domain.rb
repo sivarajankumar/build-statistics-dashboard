@@ -126,8 +126,8 @@ module Mongoboard
 		end
 
 		def findUniqByName(software, version, label)
-			release = ReleaseService.instance.findUniqBy(software, version)
-			findUniqBy release, label
+			release = ReleaseService.instance.findUniqBy software, version
+			findUniqByName2 release, label
 		end
 
 		def find(releaseId, stepId)
