@@ -7,6 +7,10 @@ require 'sinatra/json'
 module Mongoboard
 	class Webapp < Sinatra::Base
 	
+		configure :production, :development do
+			enable :logging
+		end
+
 		set :static, true
 		set :public_dir, File.dirname(__FILE__) + '/static'
 
@@ -65,6 +69,32 @@ module Mongoboard
 		get '/releases/names.json' do 
 			knownNames = Release.where(type: 'template').distinct(:name)
 			json knownNames
+		end
+
+		post '/create-or-replace/release-:name/version-:version/step-:stepName.json' do |name, version, stepName|
+
+			begin
+				release = ReleaseService.instance.findUniqBy name, version
+			rescue Errors::WrongResultCount => e
+				# abort if not found
+				logger.warn e.message
+				status 404
+			else
+			
+				step = nil
+				begin
+					step = StepService.instance.findUniqByName2 release, stepName
+				rescue Errors::WrongResultCount => e
+					# new if not found
+					step = Step.new
+					release.steps.push step
+					release.save!	
+				end
+
+				saveStep step, params, request.ip
+				json step
+
+			end
 		end
 
 		post '/release/:releaseId/step/:stepId.json' do |releaseId, stepId|
@@ -244,6 +274,10 @@ module Mongoboard
 		end
 
 		def toStringArray(parameter)
+			if parameter.nil?
+				return nil
+			end
+
 			result = []
 			if parameter.kind_of?(Array)
 				parameter.each do |item|
@@ -253,6 +287,25 @@ module Mongoboard
 				result.push parameter.to_s
 			end
 			result
+		end
+
+		def saveStep step, params, clientIp
+
+			status = params['status']
+			label = params['label']
+			types = toStringArray(params['types'])
+
+			step.label = label if not label.nil?
+			step.status = status if not status.nil?
+			step.types = types if not types.nil?
+
+			comment = Comment.new
+			comment.author = "System " + clientIp
+			comment.text = "Step saved by external interface " + step.label.to_s
+			step.comments.push comment
+	
+			step.save!
+			comment.save!
 		end
 
 		def saveAttachment step, attachment, clientIp

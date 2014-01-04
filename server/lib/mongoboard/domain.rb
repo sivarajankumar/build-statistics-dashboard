@@ -114,8 +114,7 @@ module Mongoboard
 
 		include Singleton
 
-		def findUniqByName(software, version, label)
-			release = ReleaseService.instance.findUniqBy(software, version)
+		def findUniqByName2(release, label)
 			query = release.steps.where(:label => label)
 			count = query.count
 
@@ -123,7 +122,12 @@ module Mongoboard
 				raise Errors::WrongResultCount.new(count), "1 step expected"
 			end
 
-			return query[0]
+			query[0]
+		end
+
+		def findUniqByName(software, version, label)
+			release = ReleaseService.instance.findUniqBy(software, version)
+			findUniqBy release, label
 		end
 
 		def find(releaseId, stepId)
