@@ -84,7 +84,7 @@ softwareRelasesDirectives.directive('renderMetric', function() {
 				  minorVerticalLines: true
 				},
 				xaxis : { showLabels : true },
-				yaxis : { showLabels : true },
+				yaxis : { showLabels : true, min: 0 },
 				mouse : { track : true },
 				legend : {
 				  position : 'se',

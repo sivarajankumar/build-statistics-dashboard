@@ -47,7 +47,7 @@ softwareRelasesControllers.controller('ReleaseStepsListCtrl', ['$scope', '$route
 		}
 		
 		if(!clazzAlreadySet) {
-			ReleaseStepService.saveNewStatus(stepId, newStatus).then(function() {
+			ReleaseStepService.saveNewStatus(releaseId, stepId, newStatus).then(function() {
 				div.addClass('status-' + newStatus);
 				if(newStatus == 'passed') {
 					alert("Step passed. Server scripts will start as configured");
